@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html ng-app="Recipes">
+  <head>
+    <base href="/">
+    <title>Recipes</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
+    
+    <!-- build:css css/vendor.css -->
+    <link rel="stylesheet" href="/lib/normalize-css/normalize.css">
+    <link rel="stylesheet" href="/lib/animate.css/animate.css">
+    <!-- endbuild -->
+
+    <!-- build:css css/main.css -->
+    <link rel="stylesheet" href="/stylesheets/main.css">
+    <!-- endbuild -->
+  </head>
+  <body>
+
+    <header>
+      <div class="row">
+        <h1 class="title">Recipe Book</h1>
+
+        <a href="#" class="loggedEmail">PJankowski25@gmail.com</a>
+      </div>
+    </header>
+
+    <nav>
+      <ul>
+        <li class="{{ state == 'recipes' ? 'active' : '' }}">
+          <a ui-sref="recipes">
+            <i class="fa fa-list"></i>
+            <span>Recipes</span>
+          </a>
+        </li>
+        <li class="{{ state == 'menu' ? 'active' : '' }}">
+          <a ui-sref="menu">
+            <i class="fa fa-map"></i>
+            <span>Current Menu</span>
+          </a>
+        </li>
+        <li class="{{ state == 'shopping' ? 'active' : '' }}">
+          <a ui-sref="shopping">
+            <i class="fa fa-shopping-cart"></i>
+            <span>Shopping List</span>
+          </a>
+        </li>
+      </ul>
+    </nav>
+
+    <div class="container">
+      <div ui-view></div>
+    </div>
+
+    <!-- Vendor -->
+    <!-- build:js app/vendor.js -->
+    <script src="/lib/jquery/dist/jquery.min.js"></script>
+    <script src="/lib/angular/angular.js"></script>
+    <script src="/lib/angular-ui-router/release/angular-ui-router.js"></script>
+    <script src="/lib/firebase/firebase.js"></script>
+    <script src="/lib/angularfire/dist/angularfire.js"></script>
+    <script src="/lib/angular-animate/angular-animate.js"></script>
+    <!-- endbuild -->
+
+    <!-- App -->
+    <!-- build:js app/app.js -->
+    <script src="/app/app.js"></script>
+
+    <script src="/app/services/recipes.js"></script>
+    <script src="/app/services/menu.js"></script>
+    <script src="/app/services/shopping.js"></script>
+
+    <script src="/app/controllers/RecipesCtrl.js"></script>
+    <script src="/app/controllers/MenuCtrl.js"></script>
+    <script src="/app/controllers/ShoppingCtrl.js"></script>
+    <!-- endbuild -->
+  </body>
+</html>

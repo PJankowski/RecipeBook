@@ -1,0 +1,40 @@
+@media screen and (max-width: 400px)
+  .container
+    width: 100vw
+    margin: 0
+
+  .row
+    padding-left: 50px
+    padding-right: 50px
+
+  nav
+    width: 100vw
+    // position: fixed
+    top: auto
+    left: 0
+    right: 0
+    bottom: 0
+    height: auto
+    padding-top: 0
+
+    ul
+
+      li
+        +span-columns(4)
+        height: 90px
+        font-size: 1.8em
+        box-sizing: border-box
+
+        i
+          margin-top: 20px
+
+        &.active
+          border-left: none
+          border-bottom: 9px solid $accent
+
+          &:hover
+            border-bottom: 9px solid $accent
+
+        &:hover
+          border: none
+          background: $primary
