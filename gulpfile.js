@@ -40,7 +40,11 @@ gulp.task('serve', ['server', 'watch']);
 
 gulp.task('default', ['serve']);
 
-gulp.task('sass', function() {
+gulp.task('clean', function(){
+  return del(['dist/**/*']);
+});
+
+gulp.task('sass', ['clean'], function() {
     gulp.src('src/sass/main.sass')
       .pipe(sass())
       .pipe(gulp.dest('src/stylesheets'));
@@ -58,15 +62,10 @@ gulp.task('useref', ['sass'], function(){
       .pipe(gulp.dest('dist/client'));
 });
 
-gulp.task('html', function(){
+gulp.task('html', ['useref'], function(){
   gulp.src('src/app/partials/*.html')
     .pipe(gulp.dest('dist/client/app/partials'));
 });
-
-// gulp.task('build:server', function(){
-//   gulp.src('server.js')
-//     .pipe(gulp.dest('dist'));
-// });
 
 gulp.task('serve:build', function(){
   gulp.src('dist/client')
@@ -77,8 +76,4 @@ gulp.task('serve:build', function(){
     }));
 });
 
-gulp.task('build', ['useref', 'html', 'build:server']);
-
-gulp.task('clean', function(){
-  return del(['dist/**/*']);
-});
+gulp.task('build', ['html']);
