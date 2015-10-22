@@ -1,8 +1,10 @@
 language: node_js
 node_js:
 - '0.11'
+before_install:
+- npm install -g bower gulp
 before_script:
-- npm install -g gulp
+- bower install
 script:
 - gulp build
 deploy:
@@ -11,4 +13,4 @@ deploy:
     secure: ZgUcMcMF2MXyYLv0KwDw5hwUdJng3jcjxp2I8/TOBemumJA4G0nI8PQiaanhM0kM5yc999p/rB2wpREa8fSSFiD7wx372+ZY4JOLa58U5MyfsDYvzsj7QWaiTPktBi4gLSmFi1nrx92bhGQ756+/G81fA+WeheStd+SNY2tOS20cCMBzf/0YPyqvkbZ16x3f5YQkhZKIlK3c1Xzmk2DYmFecMBizyqAgYo2RWW84cqWxy/UCyILkimV2uIFzuPui8kN6DIyW8jTrT867qsM+h6XLT2DJtQxZlTOpulezZRz48GVaik3Tc4XQkhC6kH2a26oF4qF3V17YO5d24I4NB+DaM84FQR3lUrv+8invHNPWERCSuDSJ1zul2P1VPwYWs99k9ly0JvwB+LPeYiCeYl5qScwKfFsBglLMwWLl/YjZwtGZirxMelyl+oRDOyRzw4aGO9u7RB5I4pQo/IrTSyXheRNp5Ju1409OScvJagFqmW7pH3qJx26elpoTuRIZx07EYyJnmLDa8kPJsWRQdXFn2w0O2AJ2e1K9bRIajG0ZbrM9QWXZG8xGfjpEr/aQS6mTAvozSbD+whSlvj4mZr0yvtcE/YKGrWEsQY15xvet50i8o3wUiZEda7c0i+Disj6fUzDX9ggeUctXjs+UjYcuhi/hGrphTy8pVG2H+ao=
   app:
     master: weekly-recipe
-    dev: weely-recipe-staging
+    dev: weekly-recipe-staging
