@@ -63,10 +63,10 @@ gulp.task('html', function(){
     .pipe(gulp.dest('dist/client/app/partials'));
 });
 
-gulp.task('build:server', function(){
-  gulp.src('server.js')
-    .pipe(gulp.dest('dist'));
-});
+// gulp.task('build:server', function(){
+//   gulp.src('server.js')
+//     .pipe(gulp.dest('dist'));
+// });
 
 gulp.task('serve:build', function(){
   gulp.src('dist/client')
