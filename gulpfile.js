@@ -44,7 +44,7 @@ gulp.task('clean', function(){
   return del(['dist/**/*']);
 });
 
-gulp.task('sass', ['clean'], function() {
+gulp.task('sass', function() {
     gulp.src('src/sass/main.sass')
       .pipe(sass())
       .pipe(gulp.dest('src/stylesheets'));
