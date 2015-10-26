@@ -1,0 +1,14 @@
+<section id="shopping">
+  <h1>{{title}}</h1>
+
+  <div class="item" ng-repeat="item in list">
+    <h3>{{item.title}}</h3>
+
+    <ul class="shopping-list">
+      <li ng-repeat="obj in item.ingredients">
+        <i class="fa fa-square-o"></i>
+        {{obj.name}} - {{obj.amount}}
+      </li>
+    </ul>
+  </div>
+</section>
