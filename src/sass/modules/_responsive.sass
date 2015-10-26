@@ -29,19 +29,24 @@
 
       li
         +span-columns(4)
-        height: 90px
-        font-size: 1.8em
+        height: 50px
+        font-size: 1em
         box-sizing: border-box
 
         i
-          margin-top: 20px
+          margin-top: 10px
 
         &.active
           border-left: none
-          border-bottom: 9px solid $accent
+          // border-bottom: 9px solid $accent
+          border: none
+
+          a, a i, a span
+            color: $accent
 
           &:hover
-            border-bottom: 9px solid $accent
+            // border-bottom: 9px solid $accent
+            border: none
 
         &:hover
           border: none
@@ -59,3 +64,16 @@
       span
         display: block
         margin-bottom: 10px
+
+  section#menu
+    .ingredients
+      span
+        display: block
+        margin-bottom: 10px
+
+  section#shopping
+    h3
+      font-size: 22px
+    .shopping-list
+      li
+        font-size: 1.3em
