@@ -14,3 +14,4 @@ deploy:
   app:
     master: weekly-recipe
     dev: weekly-recipe-staging
+  skip_cleanup: true
