@@ -1,9 +1,7 @@
 <section id="shopping">
   <h1>{{title}}</h1>
-
   <div class="item" ng-repeat="item in list">
     <h3>{{item.title}}</h3>
-
     <ul class="shopping-list">
       <li ng-repeat="obj in item.ingredients">
         <i class="fa" ng-click="buyItem(obj, $parent.$index, $index)" ng-class="{'fa-square-o': !obj.bought, 'fa-check-square-o': obj.bought, 'bought': obj.bought}"></i>

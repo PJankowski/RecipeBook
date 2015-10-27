@@ -10,21 +10,17 @@
     <link rel="stylesheet" href="/lib/normalize-css/normalize.css">
     <link rel="stylesheet" href="/lib/animate.css/animate.css">
     <!-- endbuild -->
-
     <!-- build:css css/main.css -->
     <link rel="stylesheet" href="/stylesheets/main.css">
     <!-- endbuild -->
   </head>
   <body>
-
     <header>
       <div class="row">
         <h1 class="title">Recipe Book</h1>
-
-        <a href="#" class="loggedEmail">PJankowski25@gmail.com</a>
+        <a href="#" class="loggedEmail">{{user.password.email}}</a>
       </div>
     </header>
-
     <nav>
       <ul>
         <li class="{{ state == 'recipes' ? 'active' : '' }}">
@@ -47,11 +43,9 @@
         </li>
       </ul>
     </nav>
-
     <div class="container">
       <div ui-view></div>
     </div>
-
     <!-- Vendor -->
     <!-- build:js app/vendor.js -->
     <script src="/lib/jquery/dist/jquery.min.js"></script>
@@ -61,15 +55,13 @@
     <script src="/lib/angularfire/dist/angularfire.js"></script>
     <script src="/lib/angular-animate/angular-animate.js"></script>
     <!-- endbuild -->
-
     <!-- App -->
     <!-- build:js app/app.js -->
     <script src="/app/app.js"></script>
-
+    <script src="/app/services/auth.js"></script>
     <script src="/app/services/recipes.js"></script>
     <script src="/app/services/menu.js"></script>
     <script src="/app/services/shopping.js"></script>
-
     <script src="/app/controllers/RecipesCtrl.js"></script>
     <script src="/app/controllers/MenuCtrl.js"></script>
     <script src="/app/controllers/ShoppingCtrl.js"></script>
