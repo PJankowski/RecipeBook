@@ -18,7 +18,7 @@
     <header>
       <div class="row">
         <h1 class="title">Recipe Book</h1>
-        <a href="#" class="loggedEmail">{{user.password.email}}</a>
+        <a href="#" class="loggedEmail" ng-hide="!user" ng-click="logout()" ng-cloak>{{user.password.email}}</a>
       </div>
     </header>
     <nav>
@@ -62,6 +62,7 @@
     <script src="/app/services/recipes.js"></script>
     <script src="/app/services/menu.js"></script>
     <script src="/app/services/shopping.js"></script>
+    <script src="/app/controllers/HomeCtrl.js"></script>
     <script src="/app/controllers/RecipesCtrl.js"></script>
     <script src="/app/controllers/MenuCtrl.js"></script>
     <script src="/app/controllers/ShoppingCtrl.js"></script>

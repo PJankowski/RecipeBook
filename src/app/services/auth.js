@@ -28,6 +28,13 @@
 
                         return deferred.promise;
                     },
+                    isLoggedIn: function() {
+                      if(auth.$getAuth()) {
+                        return true;
+                      } else {
+                        return false;
+                      }
+                    },
                     getSignedInUser: function() {
                         return auth.$getAuth();
                     },
