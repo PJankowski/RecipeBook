@@ -6,6 +6,11 @@
       $scope.title = "Shopping List";
 
       $scope.list = Menu.getMenu();
-      console.log($scope.list);
+      
+      $scope.buyItem = function(ingredient, item, index) {
+        ingredient.bought = !ingredient.bought;
+
+        Menu.buyIngredient(ingredient, item, index);
+      };
     }]);
 })();

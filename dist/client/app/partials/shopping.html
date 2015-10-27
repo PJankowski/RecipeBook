@@ -6,7 +6,7 @@
 
     <ul class="shopping-list">
       <li ng-repeat="obj in item.ingredients">
-        <i class="fa fa-square-o"></i>
+        <i class="fa" ng-click="buyItem(obj, $parent.$index, $index)" ng-class="{'fa-square-o': !obj.bought, 'fa-check-square-o': obj.bought, 'bought': obj.bought}"></i>
         {{obj.name}} - {{obj.amount}}
       </li>
     </ul>

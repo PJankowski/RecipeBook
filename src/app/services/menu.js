@@ -11,7 +11,10 @@
           return menu;
         },
         addToMenu: function(recipe) {
-          // menu.$add(recipe);
+          console.log(recipe);
+          angular.forEach(recipe.ingredients, function(key, value){
+            key.bought = false;
+          });
           var deferred = $q.defer();
             menu.$add(recipe).then(function(data){
               deferred.resolve(data.key());
@@ -26,6 +29,10 @@
             deferred.resolve(true);
           });
           return deferred.promise;
+        },
+        buyIngredient: function(ingredient, item, index) {
+          menu[item].ingredients[index] = ingredient;
+          menu.$save(menu[item]);
         }
       };
     }]);

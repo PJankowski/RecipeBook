@@ -7,7 +7,6 @@ before_script:
 - bower install
 script:
 - gulp build
-- git status
 deploy:
   provider: heroku
   api_key:

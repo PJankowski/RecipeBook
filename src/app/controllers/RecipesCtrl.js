@@ -37,10 +37,7 @@
 
         Menu.addToMenu(recipe)
           .then(function(id){
-            Recipe.updateInMenu(index, id)
-              .then(function(){
-                Shopping.addToList(recipe.ingredients);
-              });
+            Recipe.updateInMenu(index, id);
           });
       };
 

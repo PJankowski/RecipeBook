@@ -2,10 +2,10 @@
 
 @import 'tools/tools'
 
-$primary: #362F41
-$primaryLight: #514162
-$accent: #92E1D6
-$danger: #ED494B
+$primary: #009688
+$primaryDark: #00796B
+$accent: #CFD8DC
+$danger: #E26A6A
 $text: #333333
 
 $vertical-rhythm: 30px
@@ -40,7 +40,7 @@ h1, h2, h3, h4, h5
 
 header
   height: 10vh
-  background: $primaryLight
+  background: $primaryDark
   width: 100%
   box-shadow: 0 1px 2px rgba(0,0,0,0.14), 0 4px 8px rgba(0,0,0,0.28)
   position: fixed
@@ -86,7 +86,7 @@ nav
       font-size: 2.4em
 
       a
-        color: #FFFFFF
+        color: $accent
         text-decoration: none
         display: block
 
@@ -101,11 +101,17 @@ nav
 
       &.active
         border-left: 9px solid $accent
-        background: $primaryLight
+        background: $primaryDark
+
+        a
+          color: #FFFFFF
 
       &:hover
         border-left: 9px solid $accent
-        background: $primaryLight
+        background: $primaryDark
+
+        a
+          color: #FFFFFF
 
 article
   background: #FFFFFF
@@ -113,12 +119,21 @@ article
   box-shadow: 1px 1px 2px rgba(0,0,0,0.14), -1px 1px 2px rgba(0,0,0,0.14)
   transition: box-shadow 0.3s ease-in-out, background 0.3s ease-in
   margin-top: $vertical-rhythm
+  border-radius: 3px
 
   &:hover
     box-shadow: 3px 3px 4px rgba(0,0,0,0.14), -3px 3px 4px rgba(0,0,0,0.14)
 
   &.inMenu
     background: $accent
+
+#{$all-buttons}
+  border-radius: 1px
+  box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24)
+  transition: box-shadow 0.3s ease-in-out
+
+  &:hover
+    box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23)
 
 @import 'pages/pages'
 @import 'modules/modules'
