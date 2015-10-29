@@ -21,7 +21,7 @@
         <a href="#" class="loggedEmail" ng-hide="!user" ng-click="logout()" ng-cloak>{{user.password.email}}</a>
       </div>
     </header>
-    <nav>
+    <nav ng-show="state != 'home'">
       <ul>
         <li class="{{ state == 'recipes' ? 'active' : '' }}">
           <a ui-sref="recipes">
@@ -43,9 +43,9 @@
         </li>
       </ul>
     </nav>
-    <div class="container">
-      <div ui-view></div>
-    </div>
+
+    <div ui-view></div>
+    
     <!-- Vendor -->
     <!-- build:js app/vendor.js -->
     <script src="/lib/jquery/dist/jquery.min.js"></script>
@@ -62,7 +62,8 @@
     <script src="/app/services/recipes.js"></script>
     <script src="/app/services/menu.js"></script>
     <script src="/app/services/shopping.js"></script>
-    <script src="/app/controllers/HomeCtrl.js"></script>
+    <!-- <script src="/app/controllers/HomeCtrl.js"></script> -->
+    <script src="/app/controllers/AuthCtrl.js"></script>
     <script src="/app/controllers/RecipesCtrl.js"></script>
     <script src="/app/controllers/MenuCtrl.js"></script>
     <script src="/app/controllers/ShoppingCtrl.js"></script>

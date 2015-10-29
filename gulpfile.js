@@ -6,7 +6,8 @@ var gulp = require('gulp'),
     useref = require('gulp-useref'),
     gulpif = require('gulp-if'),
     minifyCss = require('gulp-minify-css'),
-    del = require('del');
+    del = require('del'),
+    replace = require('gulp-replace');
 
 gulp.task('sass', function() {
     gulp.src('src/sass/main.sass')
@@ -14,13 +15,19 @@ gulp.task('sass', function() {
       .pipe(gulp.dest('src/stylesheets'));
 });
 
+// gulp.task('replace:serve', function(){
+//   gulp.src('src/app/app.js')
+//     .pipe(replace('https://bookofrecipes.firebaseio.com/', 'https://bookofrecipesstaging.firebaseio.com/'))
+//     .pipe(gulp.dest('src/app'));
+// });
+
 gulp.task('lint', function(){
   gulp.src('src/app/**/*.js')
     .pipe(hint())
     .pipe(hint.reporter('default'));
 });
 
-gulp.task('server', ['sass', 'lint'], function(){
+gulp.task('server', ['sass', 'replace:serve', 'lint'], function(){
   
   gulp.src('src')
     .pipe(server({
@@ -49,6 +56,12 @@ gulp.task('sass', function() {
       .pipe(sass())
       .pipe(gulp.dest('src/stylesheets'));
 });
+
+// gulp.task('replace:build', function(){
+//   gulp.src('src/app/app.js')
+//     .pipe(replace('https://bookofrecipesstaging.firebaseio.com/', 'https://bookofrecipes.firebaseio.com/'))
+//     .pipe(gulp.dest('src/app'));
+// });
 
 gulp.task('useref', ['sass'], function(){
   var assets = useref.assets();

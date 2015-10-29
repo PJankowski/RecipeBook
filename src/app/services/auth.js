@@ -2,9 +2,9 @@
     'use strict';
 
     angular.module('Recipes')
-        .factory('Auth', ['$firebaseAuth', '$q',
-            function($firebaseAuth, $q) {
-                var auth, ref = new Firebase('https://bookofrecipes.firebaseio.com');
+        .factory('Auth', ['$firebaseAuth', '$q', 'FIREBASE_URL',
+            function($firebaseAuth, $q, FIREBASE_URL) {
+                var auth, ref = new Firebase(FIREBASE_URL);
                 auth = $firebaseAuth(ref);
 
                 // auth.$onAuth(function(authData){

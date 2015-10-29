@@ -1,0 +1,129 @@
+section#home
+  padding-top: 10vh
+  padding-bottom: 10vh
+  padding-left: 200px
+  padding-right: 200px
+  position: relative
+
+  h1
+    text-align: center
+    font-size: 36px
+    font-weight: 400
+    margin-top: $vertical-rhythm
+    margin-bottom: $vertical-rhythm
+
+  article
+    +clearfix()
+    padding: 0
+    background: none
+    box-shadow: none
+
+    form.login,
+    form.signup
+      float: left
+      width: 50%
+      padding: 1.2rem
+
+      h3.form-title
+        text-align: center
+        font-size: 2em
+        color: $primary
+        font-weight: 400
+        letter-spacing: 1px
+        margin-bottom: $vertical-rhythm * 2
+
+      .group
+        position: relative
+        width: 80%
+        margin-left: auto
+        margin-right: auto
+        margin-bottom: $vertical-rhythm * 2
+
+        label
+          position: absolute
+          color: $accent
+          font-size: 18px
+          top: 4px
+          bottom: 4px
+          left: 0px
+          z-index: 1
+          transition: all 0.2s ease
+
+        input
+          width: 100%
+          height: 37px
+          border: none
+          border-bottom: 2px solid $accent
+          outline: none
+          background: none
+          font-size: 18px
+          position: relative
+          z-index: 2
+
+        input:valid ~ label, input:focus ~ label
+          top: -20px
+          left: 0
+          color: $primaryDark
+          font-size: 12px
+
+        .bar
+          display: block
+          width: 100%
+          position: relative
+
+        .bar:before,
+        .bar:after
+          content: ''
+          height: 2px
+          width: 0
+          bottom: 0
+          z-index: 3
+          position: absolute
+          background: $primaryDark
+          transition: 0.2s ease all
+          -moz-transition: 0.2s ease all
+          -webkit-transition: 0.2s ease all
+
+        .bar:before 
+          left: 50%
+        
+        .bar:after 
+          right: 50%
+
+        input:focus ~ .bar:before,
+        input:focus ~ .bar:after,
+        input:valid ~ .bar:after,
+        input:valid ~ .bar:before 
+          width: 50%
+
+        .highlight 
+          position: absolute
+          height: 60% 
+          width: 100px 
+          top: 25% 
+          left: 0
+          pointer-events: none
+          opacity: 0.5
+
+        input:focus ~ .highlight 
+          animation: inputHighlighter 0.3s ease
+
+    form.login
+      background: #FFFFFF
+
+    form.signup
+      // background: #FFFFFF
+      background: $primary
+
+      h3.form-title
+        color: $accent
+        
+@keyframes inputHighlighter
+  from
+    background: $primaryDark
+  to
+    width: 0
+    background: transparent
+        
+        
+

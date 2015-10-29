@@ -1,3 +1,42 @@
 <section id="home">
   <h1>{{title}}</h1>
+
+  <article>
+    <form class="login">
+      <h3 class="form-title">Login</h3>
+
+      <div class="group">
+        <input type="text" ng-model="login.email" required/>
+        <span class="highlight"></span>
+        <span class="bar"></span>
+        <label>Email</label>
+      </div>
+
+      <div class="group">
+        <input type="password" ng-model="login.password" required/>
+        <span class="highlight"></span>
+        <span class="bar"></span>
+        <label>Password</label>
+      </div>
+    </form>
+
+    <form class="signup">
+      <h3 class="form-title">Or Signup</h3>
+
+      <div class="group">        
+        <input type="text" ng-model="signup.email" required/>
+        <span class="highlight"></span>
+        <span class="bar"></span>
+        <label>Email</label>
+      </div>
+
+      <div class="group">
+        <input type="password" ng-model="signup.password" required/>
+        <span class="highlight"></span>
+        <span class="bar"></span>
+        <label>Password</label>
+      </div>
+    </form>
+  </article>
+
 </section>

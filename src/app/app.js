@@ -54,7 +54,7 @@
                     .state('home', {
                         url: '/home',
                         templateUrl: '/app/partials/home.html',
-                        controller: 'HomeCtrl',
+                        controller: 'AuthCtrl',
                         onEnter: ['$state', 'Auth',
                             function($state, Auth) {
                                 if (Auth.isLoggedIn()) {
@@ -93,5 +93,6 @@
                     $rootScope.state = toState.name;
                 });
             }
-        ]);
+        ])
+        .constant('FIREBASE_URL', 'https://bookofrecipesstaging.firebaseio.com/');
 })();

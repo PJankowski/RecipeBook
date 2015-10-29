@@ -2,9 +2,9 @@
     'use strict';
 
     angular.module('Recipes')
-        .factory('Shopping', ['$firebaseArray', '$q',
-            function($firebaseArray, $q) {
-                var ref = new Firebase('https://bookofrecipes.firebaseio.com/shoppingList');
+        .factory('Shopping', ['$firebaseArray', '$q', 'FIREBASE_URL',
+            function($firebaseArray, $q, FIREBASE_URL) {
+                var ref = new Firebase(FIREBASE_URL + '/shoppingList');
                 var shoppingList = $firebaseArray(ref);
 
                 return {
