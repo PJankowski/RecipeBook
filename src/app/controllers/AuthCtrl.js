@@ -14,9 +14,13 @@
       };
 
       $scope.signup = function(user) {
-        Auth.signup(user)
+        Auth.signUp(user)
           .then(function(){
-            $state.go('recipes');
+            Auth.signIn(user)
+              .then(function(data){
+                $rootScope.user = data;
+                $state.go('recipes');
+              });
           });
       };
     }]);
