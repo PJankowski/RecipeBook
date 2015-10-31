@@ -28,6 +28,12 @@
 
                         return deferred.promise;
                     },
+                    signUp: function(user) {
+                      auth.createUser(user)
+                        .then(function(userData){
+                          return auth.$authWithPassword(userData);
+                        });
+                    },
                     isLoggedIn: function() {
                       if(auth.$getAuth()) {
                         return true;

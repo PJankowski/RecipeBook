@@ -27,7 +27,7 @@ gulp.task('lint', function(){
     .pipe(hint.reporter('default'));
 });
 
-gulp.task('server', ['sass', 'replace:serve', 'lint'], function(){
+gulp.task('server', ['sass', 'lint'], function(){
   
   gulp.src('src')
     .pipe(server({
