@@ -84,46 +84,55 @@ section#home
           -moz-transition: 0.2s ease all
           -webkit-transition: 0.2s ease all
 
-        .bar:before 
+        .bar:before
           left: 50%
-        
-        .bar:after 
+
+        .bar:after
           right: 50%
 
         input:focus ~ .bar:before,
         input:focus ~ .bar:after,
         input:valid ~ .bar:after,
-        input:valid ~ .bar:before 
+        input:valid ~ .bar:before
           width: 50%
 
-        .highlight 
+        .highlight
           position: absolute
-          height: 60% 
-          width: 100px 
-          top: 25% 
+          height: 60%
+          width: 100px
+          top: 25%
           left: 0
           pointer-events: none
           opacity: 0.5
 
-        input:focus ~ .highlight 
+        input:focus ~ .highlight
           animation: inputHighlighter 0.3s ease
+
+        .form-submit
+          padding: 10px
+          font-size: 1.2rem
 
     form.login
       background: #FFFFFF
 
     form.signup
-      // background: #FFFFFF
       background: $primary
 
       h3.form-title
-        color: $accent
-        
+        color: #FFFFFF
+
+      label
+          color: #FFFFFF !important
+
+      input:valid ~ label, input:focus ~ label
+        color: $primaryDark !important
+
+      input
+          border-bottom: 2px solid #FFFFFF !important
+
 @keyframes inputHighlighter
   from
     background: $primaryDark
   to
     width: 0
     background: transparent
-        
-        
-

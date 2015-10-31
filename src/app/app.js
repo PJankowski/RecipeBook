@@ -13,11 +13,12 @@
                         url: '/',
                         templateUrl: '/app/partials/recipes.html',
                         controller: 'RecipesCtrl',
-                        onEnter: ['$state', 'Auth',
-                            function($state, Auth) {
+                        onEnter: ['$state', '$rootScope', 'Auth',
+                            function($state, $rootScope, Auth) {
                                 if (Auth.isLoggedIn()) {
                                     return true;
                                 } else {
+                                    $rootScope.state = '';
                                     $state.go('home');
                                 }
                             }
@@ -27,11 +28,12 @@
                         url: '/menu',
                         templateUrl: '/app/partials/menu.html',
                         controller: 'MenuCtrl',
-                        onEnter: ['$state', 'Auth',
-                            function($state, Auth) {
+                        onEnter: ['$state', '$rootScope', 'Auth',
+                            function($state, $rootScope, Auth) {
                                 if (Auth.isLoggedIn()) {
                                     return true;
                                 } else {
+                                    $rootScope.state = '';
                                     $state.go('home');
                                 }
                             }
@@ -41,11 +43,12 @@
                         url: '/shopping',
                         templateUrl: '/app/partials/shopping.html',
                         controller: 'ShoppingCtrl',
-                        onEnter: ['$state', 'Auth',
-                            function($state, Auth) {
+                        onEnter: ['$state', '$rootScope', 'Auth',
+                            function($state, $rootScope, Auth) {
                                 if (Auth.isLoggedIn()) {
                                     return true;
                                 } else {
+                                    $rootScope.state = '';
                                     $state.go('home');
                                 }
                             }
@@ -68,17 +71,9 @@
 
             }
         ])
-        .run(['$rootScope', '$state', 'Auth',
-            function($rootScope, $state, Auth) {
+        .run(['$rootScope', '$state', '$timeout', 'Auth',
+            function($rootScope, $state, $timeout, Auth) {
 
-                // Auth.signIn({
-                //     email: 'PJankowski25@gmail.com',
-                //     password: 'Payton15'
-                // })
-                //     .then(function(user) {
-                //         $rootScope.user = user;
-                //     });
-                
                 if(Auth.isLoggedIn()) {
                   return true;
                 } else {

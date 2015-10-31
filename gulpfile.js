@@ -28,7 +28,6 @@ gulp.task('lint', function(){
 });
 
 gulp.task('server', ['sass', 'lint'], function(){
-
   gulp.src('src')
     .pipe(server({
       livereload: true,
