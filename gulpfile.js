@@ -27,8 +27,8 @@ gulp.task('lint', function(){
     .pipe(hint.reporter('default'));
 });
 
-gulp.task('server', ['sass', 'replace:serve', 'lint'], function(){
-  
+gulp.task('server', ['sass', 'lint'], function(){
+
   gulp.src('src')
     .pipe(server({
       livereload: true,
@@ -65,7 +65,7 @@ gulp.task('sass', function() {
 
 gulp.task('useref', ['sass'], function(){
   var assets = useref.assets();
- 
+
   return gulp.src('src/index.html')
       .pipe(assets)
       .pipe(gulpif('*.js', uglify()))
