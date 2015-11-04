@@ -2,7 +2,7 @@
   'use strict';
 
   angular.module('Recipes')
-    .controller('AuthCtrl', ['$scope', '$rootScope', '$state', 'Auth', function($scope, $rootScope, $state, Auth){
+    .controller('AuthCtrl', ['$scope', '$rootScope', '$state', 'Auth', 'User', function($scope, $rootScope, $state, Auth, User){
       $scope.title = 'Welcome';
 
       $scope.login = function(user) {
@@ -15,11 +15,14 @@
 
       $scope.signup = function(user) {
         Auth.signUp(user)
-          .then(function(){
-            Auth.signIn(user)
-              .then(function(data){
-                $rootScope.user = data;
-                $state.go('recipes');
+          .then(function(uuid){
+            User.createUser(uuid)
+              .then(function(){
+                Auth.signIn(user)
+                  .then(function(data){
+                    $rootScope.user = data;
+                    $state.go('recipes');
+                  });
               });
           });
       };

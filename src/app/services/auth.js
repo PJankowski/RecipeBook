@@ -7,14 +7,6 @@
                 var auth, ref = new Firebase(FIREBASE_URL);
                 auth = $firebaseAuth(ref);
 
-                // auth.$onAuth(function(authData){
-                //   if(authData){
-                //     console.log('Logged In');
-                //   }else{
-                //     console.log('Logged Out');
-                //   }
-                // });
-
                 return {
                     signIn: function(user) {
                         var deferred = $q.defer();
