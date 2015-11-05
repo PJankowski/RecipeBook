@@ -1,7 +1,7 @@
 (function() {
     'use strict';
 
-    angular.module('Recipes', ['ui.router', 'firebase'])
+    angular.module('Recipes', ['ui.router', 'firebase', 'Postman'])
         .config(['$stateProvider', '$urlRouterProvider', '$locationProvider',
             function($stateProvider, $urlRouterProvider, $locationProvider) {
 
@@ -81,7 +81,11 @@
                 }
 
                 $rootScope.logout = function() {
-                  Auth.logUserOut();
+                  Auth.logUserOut()
+                    .then(function(){
+                      $rootScope.user = null;
+                      $state.go('home');
+                    });
                 };
 
                 $rootScope.$on('$stateChangeSuccess', function(event, toState, toParams, fromState, fromParams) {

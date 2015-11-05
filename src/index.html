@@ -9,6 +9,7 @@
     <!-- build:css css/vendor.css -->
     <link rel="stylesheet" href="/lib/normalize-css/normalize.css">
     <link rel="stylesheet" href="/lib/animate.css/animate.css">
+    <link rel="stylesheet" href="/lib/angular-postman/css/postman.css">
     <!-- endbuild -->
     <!-- build:css css/main.css -->
     <link rel="stylesheet" href="/stylesheets/main.css">
@@ -21,7 +22,7 @@
         <a href="#" class="loggedEmail" ng-hide="!user" ng-click="logout()" ng-cloak>{{user.password.email}}</a>
       </div>
     </header>
-    <nav ng-show="state != 'home'">
+    <nav ng-hide="!user">
       <ul>
         <li class="{{ state == 'recipes' ? 'active' : '' }}">
           <a ui-sref="recipes">
@@ -54,6 +55,7 @@
     <script src="/lib/firebase/firebase.js"></script>
     <script src="/lib/angularfire/dist/angularfire.js"></script>
     <script src="/lib/angular-animate/angular-animate.js"></script>
+    <script src="/lib/angular-postman/js/postman.js"></script>
     <!-- endbuild -->
     <!-- App -->
     <!-- build:js app/app.js -->

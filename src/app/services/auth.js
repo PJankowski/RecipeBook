@@ -34,7 +34,10 @@
                         return auth.$getAuth();
                     },
                     logUserOut: function() {
+                        var deferred = $q.defer();
                         auth.$unauth();
+                        deferred.resolve(true);
+                        return deferred.promise;
                     }
                 };
 
