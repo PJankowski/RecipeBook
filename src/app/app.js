@@ -5,17 +5,18 @@
         .config(['$stateProvider', '$urlRouterProvider', '$locationProvider',
             function($stateProvider, $urlRouterProvider, $locationProvider) {
 
-                $urlRouterProvider.otherwise('/home');
+                $urlRouterProvider.otherwise('/');
                 $locationProvider.html5Mode(true);
 
                 $stateProvider
                     .state('recipes', {
-                        url: '/',
+                        url: '/recipes',
                         templateUrl: '/app/partials/recipes.html',
                         controller: 'RecipesCtrl',
                         onEnter: ['$state', '$rootScope', 'Auth',
                             function($state, $rootScope, Auth) {
                                 if (Auth.isLoggedIn()) {
+                                    $rootScope.state = 'recipes';
                                     return true;
                                 } else {
                                     $rootScope.state = '';
@@ -31,6 +32,7 @@
                         onEnter: ['$state', '$rootScope', 'Auth',
                             function($state, $rootScope, Auth) {
                                 if (Auth.isLoggedIn()) {
+                                    $rootScope.state = 'menu';
                                     return true;
                                 } else {
                                     $rootScope.state = '';
@@ -46,6 +48,7 @@
                         onEnter: ['$state', '$rootScope', 'Auth',
                             function($state, $rootScope, Auth) {
                                 if (Auth.isLoggedIn()) {
+                                    $rootScope.state = 'shopping';
                                     return true;
                                 } else {
                                     $rootScope.state = '';
@@ -55,12 +58,13 @@
                         ]
                     })
                     .state('home', {
-                        url: '/home',
+                        url: '/',
                         templateUrl: '/app/partials/home.html',
                         controller: 'AuthCtrl',
                         onEnter: ['$state', 'Auth',
                             function($state, Auth) {
                                 if (Auth.isLoggedIn()) {
+                                    $rootScope.state = 'recipes';
                                     $state.go('recipes');
                                 } else {
                                     return true;
@@ -77,7 +81,7 @@
                 if(Auth.isLoggedIn()) {
                   return true;
                 } else {
-                  $state.go('home');
+                  $state.go('recipes');
                 }
 
                 $rootScope.logout = function() {
@@ -87,10 +91,6 @@
                       $state.go('home');
                     });
                 };
-
-                $rootScope.$on('$stateChangeSuccess', function(event, toState, toParams, fromState, fromParams) {
-                    $rootScope.state = toState.name;
-                });
             }
         ])
         .constant('FIREBASE_URL', 'https://bookofrecipesstaging.firebaseio.com/');

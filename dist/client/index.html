@@ -16,7 +16,7 @@
         <a href="#" class="loggedEmail" ng-hide="!user" ng-click="logout()" ng-cloak>{{user.password.email}}</a>
       </div>
     </header>
-    <nav ng-show="state != 'home'">
+    <nav ng-hide="!user">
       <ul>
         <li class="{{ state == 'recipes' ? 'active' : '' }}">
           <a ui-sref="recipes">
