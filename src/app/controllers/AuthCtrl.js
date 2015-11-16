@@ -9,6 +9,7 @@
         Auth.signIn(user)
           .then(function(data){
             $rootScope.user = data;
+            console.log(data);
             $state.go('recipes');
           });
       };

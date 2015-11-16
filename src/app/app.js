@@ -61,8 +61,8 @@
                         url: '/',
                         templateUrl: '/app/partials/home.html',
                         controller: 'AuthCtrl',
-                        onEnter: ['$state', 'Auth',
-                            function($state, Auth) {
+                        onEnter: ['$state', '$rootScope', 'Auth',
+                            function($state, $rootScope, Auth) {
                                 if (Auth.isLoggedIn()) {
                                     $rootScope.state = 'recipes';
                                     $state.go('recipes');
@@ -77,12 +77,6 @@
         ])
         .run(['$rootScope', '$state', '$timeout', 'Auth',
             function($rootScope, $state, $timeout, Auth) {
-
-                if(Auth.isLoggedIn()) {
-                  return true;
-                } else {
-                  $state.go('recipes');
-                }
 
                 $rootScope.logout = function() {
                   Auth.logUserOut()
