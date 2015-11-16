@@ -15,5 +15,4 @@ deploy:
     master: weekly-recipe
     staging: weekly-recipe-staging
     dev: weekly-recipe-dev
-
   skip_cleanup: true
