@@ -1,91 +1,35 @@
 (function() {
     'use strict';
 
-    angular.module('Recipes', ['ui.router', 'firebase', 'Postman'])
+    angular.module('Recipes', ['ui.router', 'Postman'])
         .config(['$stateProvider', '$urlRouterProvider', '$locationProvider',
             function($stateProvider, $urlRouterProvider, $locationProvider) {
 
-                $urlRouterProvider.otherwise('/');
+                $urlRouterProvider.otherwise('/recipes');
                 $locationProvider.html5Mode(true);
 
                 $stateProvider
                     .state('recipes', {
                         url: '/recipes',
                         templateUrl: '/app/partials/recipes.html',
-                        controller: 'RecipesCtrl',
-                        onEnter: ['$state', '$rootScope', 'Auth',
-                            function($state, $rootScope, Auth) {
-                                if (Auth.isLoggedIn()) {
-                                    $rootScope.state = 'recipes';
-                                    return true;
-                                } else {
-                                    $rootScope.state = '';
-                                    $state.go('home');
-                                }
-                            }
-                        ]
+                        controller: 'RecipesCtrl'
                     })
                     .state('menu', {
                         url: '/menu',
                         templateUrl: '/app/partials/menu.html',
-                        controller: 'MenuCtrl',
-                        onEnter: ['$state', '$rootScope', 'Auth',
-                            function($state, $rootScope, Auth) {
-                                if (Auth.isLoggedIn()) {
-                                    $rootScope.state = 'menu';
-                                    return true;
-                                } else {
-                                    $rootScope.state = '';
-                                    $state.go('home');
-                                }
-                            }
-                        ]
+                        controller: 'MenuCtrl'
                     })
                     .state('shopping', {
                         url: '/shopping',
                         templateUrl: '/app/partials/shopping.html',
-                        controller: 'ShoppingCtrl',
-                        onEnter: ['$state', '$rootScope', 'Auth',
-                            function($state, $rootScope, Auth) {
-                                if (Auth.isLoggedIn()) {
-                                    $rootScope.state = 'shopping';
-                                    return true;
-                                } else {
-                                    $rootScope.state = '';
-                                    $state.go('home');
-                                }
-                            }
-                        ]
-                    })
-                    .state('home', {
-                        url: '/',
-                        templateUrl: '/app/partials/home.html',
-                        controller: 'AuthCtrl',
-                        onEnter: ['$state', '$rootScope', 'Auth',
-                            function($state, $rootScope, Auth) {
-                                if (Auth.isLoggedIn()) {
-                                    $rootScope.state = 'recipes';
-                                    $state.go('recipes');
-                                } else {
-                                    return true;
-                                }
-                            }
-                        ]
+                        controller: 'ShoppingCtrl'
                     });
+                    // .state('home', {
+                    //     url: '/',
+                    //     templateUrl: '/app/partials/home.html',
+                    //     controller: 'AuthCtrl'
+                    // });
 
             }
-        ])
-        .run(['$rootScope', '$state', '$timeout', 'Auth',
-            function($rootScope, $state, $timeout, Auth) {
-
-                $rootScope.logout = function() {
-                  Auth.logUserOut()
-                    .then(function(){
-                      $rootScope.user = null;
-                      $state.go('home');
-                    });
-                };
-            }
-        ])
-        .constant('FIREBASE_URL', 'https://bookofrecipesstaging.firebaseio.com/');
+        ]);
 })();

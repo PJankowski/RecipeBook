@@ -7,7 +7,11 @@
                 $scope.title = 'Recipes';
                 $scope.newForm = false;
 
-                $scope.recipes = Recipe.getRecipes();
+                Recipe.getRecipes()
+                    .then(function(recipes){
+                        $scope.recipes = recipes;
+                    });
+
                 $scope.ingredients = [1];
 
                 $scope.newRecipe = function() {
@@ -20,13 +24,29 @@
                 };
 
                 $scope.addRecipe = function(newRec) {
-                    Recipe.addNewRecipe(newRec);
-                    $scope.newRec = '';
-                    $scope.newForm = false;
+
+                    var obj = {
+                        title: newRec.title,
+                        description: newRec.description
+                    };
+
+                    Recipe.addNewRecipe(obj, newRec.ingredients)
+                        .then(function(recipe){
+                            $scope.recipes.push(recipe);
+                            $scope.newRec = '';
+                            $scope.newForm = false;
+                        }, function(err){
+                            console.log(err);
+                        });
                 };
 
-                $scope.removeRecipe = function(recipe) {
-                    Recipe.removeRecipe(recipe);
+                $scope.removeRecipe = function(recipe, index) {
+                    Recipe.removeRecipe(recipe)
+                        .then(function(){
+                            $scope.recipes.splice(index, 1);
+                        }, function(err){
+                            alert(err);
+                        });
                 };
 
                 $scope.removeIngredient = function(index) {

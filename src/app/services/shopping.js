@@ -2,20 +2,9 @@
     'use strict';
 
     angular.module('Recipes')
-        .factory('Shopping', ['$firebaseArray', '$q', 'FIREBASE_URL',
-            function($firebaseArray, $q, FIREBASE_URL) {
-                var ref = new Firebase(FIREBASE_URL + '/shoppingList');
-                var shoppingList = $firebaseArray(ref);
-
+        .factory('Shopping', ['$q',
+            function($q) {
                 return {
-                    getItems: function() {
-                        return shoppingList;
-                    },
-                    addToList: function(ingredients) {
-                        angular.forEach(ingredients, function(value, key) {
-                            shoppingList.$add(value);
-                        });
-                    }
                 };
             }
         ]);

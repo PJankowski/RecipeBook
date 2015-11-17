@@ -37,12 +37,12 @@ gulp.task('server', ['sass', 'lint'], function(){
 
 });
 
-gulp.task('watch', ['server'], function(){
+gulp.task('watch', ['sass', 'lint'], function(){
   gulp.watch('src/sass/**/*.sass', ['sass']);
   gulp.watch('src/app/**/*.js', ['lint']);
 });
 
-gulp.task('serve', ['server', 'watch']);
+gulp.task('serve', ['watch']);
 
 gulp.task('default', ['serve']);
 

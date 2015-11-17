@@ -19,10 +19,10 @@
     <header>
       <div class="row">
         <h1 class="title">Recipe Book</h1>
-        <a href="#" class="loggedEmail" ng-hide="!user" ng-click="logout()" ng-cloak>{{user.password.email}}</a>
+        <a href="#" class="loggedEmail" ng-click="logout()" ng-cloak>PJankowski25@gmail.com</a>
       </div>
     </header>
-    <nav ng-hide="!user">
+    <nav>
       <ul>
         <li class="{{ state == 'recipes' ? 'active' : '' }}">
           <a ui-sref="recipes">
@@ -60,13 +60,13 @@
     <!-- App -->
     <!-- build:js app/app.js -->
     <script src="/app/app.js"></script>
-    <script src="/app/services/auth.js"></script>
-    <script src="/app/services/users.js"></script>
+    <!-- <script src="/app/services/auth.js"></script> -->
+    <!-- <script src="/app/services/users.js"></script> -->
     <script src="/app/services/recipes.js"></script>
     <script src="/app/services/menu.js"></script>
     <script src="/app/services/shopping.js"></script>
     <!-- <script src="/app/controllers/HomeCtrl.js"></script> -->
-    <script src="/app/controllers/AuthCtrl.js"></script>
+    <!-- <script src="/app/controllers/AuthCtrl.js"></script> -->
     <script src="/app/controllers/RecipesCtrl.js"></script>
     <script src="/app/controllers/MenuCtrl.js"></script>
     <script src="/app/controllers/ShoppingCtrl.js"></script>
