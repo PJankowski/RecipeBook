@@ -13,10 +13,10 @@
     <header>
       <div class="row">
         <h1 class="title">Recipe Book</h1>
-        <a href="#" class="loggedEmail" ng-hide="!user" ng-click="logout()" ng-cloak>{{user.password.email}}</a>
+        <a href="#" class="loggedEmail" ng-click="logout()" ng-cloak>PJankowski25@gmail.com</a>
       </div>
     </header>
-    <nav ng-hide="!user">
+    <nav>
       <ul>
         <li class="{{ state == 'recipes' ? 'active' : '' }}">
           <a ui-sref="recipes">

@@ -35,7 +35,7 @@
     <article ng-repeat="recipe in recipes" ng-class="{'inMenu': recipe.inMenu}">
       <h3 class="recipe-name">
       <span>{{recipe.title}}</span>
-      <i class="fa fa-trash-o" ng-click="removeRecipe(recipe)"></i>
+      <i class="fa fa-trash-o" ng-click="removeRecipe(recipe, $index)"></i>
       </h3>
       <p class="description">{{recipe.description}}</p>
       <div class="ingredients">
