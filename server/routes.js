@@ -1,5 +1,7 @@
 var config = require('./config.js'),
     recipes = require('./controllers/recipes'),
+    menu = require('./controllers/menu'),
+    shopping = require('./controllers/shopping-list'),
     path = require('path');
 
 module.exports = function(app) {
@@ -9,7 +11,20 @@ module.exports = function(app) {
    */
   app.get('/api/recipes', recipes.index);
   app.post('/api/recipes', recipes.create);
-  app.delete('/api/recipe/:id', recipes.destroy);
+  app.delete('/api/recipes/:id', recipes.destroy);
+
+  /**
+   * Menu
+   */
+  app.get('/api/recipes/menu', menu.index);
+  app.put('/api/recipes/menu', menu.addToMenu);
+  app.put('/api/recipes/menu/remove', menu.removeFromMenu);
+
+  /**
+   * Shopping
+   */
+  app.get('/api/recipes/shopping', shopping.index);
+  app.put('/api/recipes/item', shopping.buyItem);
 
   if(config.env == 'development') {
     app.get('/*', function(req, res){
@@ -17,7 +32,7 @@ module.exports = function(app) {
     });
   } else {
     app.get('/*', function(req, res){
-      res.sendFile(path.normalize(__dirname + '/../dist/index.html'));
+      res.sendFile(path.normalize(__dirname + '/../../dist/client/index.html'));
     });
   }
 

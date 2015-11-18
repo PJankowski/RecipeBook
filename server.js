@@ -22,7 +22,7 @@ app.use(bodyParser.json())
 if(process.env.NODE_ENV == 'development'){
   app.use(express.static(path.join(__dirname, 'src')));
 }else{
-  app.use(express.static(path.join(__dirname, 'dist/client')));
+  app.use(express.static(path.join(__dirname, 'client')));
 }
 
 var config = require('./server/config');

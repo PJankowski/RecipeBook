@@ -54,18 +54,20 @@
                 };
 
                 $scope.addToMenu = function(recipe, index) {
-                    recipe.inMenu = true;
-
-                    Menu.addToMenu(recipe)
-                        .then(function(id) {
-                            Recipe.updateInMenu(index, id);
+                    Recipe.addToMenu(recipe)
+                        .then(function(){
+                            recipe.inMenu = true;
+                        }, function(err){
+                            console.log(err);
                         });
                 };
 
                 $scope.removeMenu = function(recipe, index) {
-                    Menu.removeItem(recipe)
+                    Menu.removeFromMenu(recipe)
                         .then(function() {
-                            Recipe.removeMenu(index);
+                            recipe.inMenu = false;
+                        }, function(err){
+                            console.log(err);
                         });
                 };
             }

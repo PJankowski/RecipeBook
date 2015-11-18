@@ -1,0 +1,1 @@
+var mongoose=require("mongoose"),recipeSchema=mongoose.Schema({title:String,description:String,inMenu:{type:Boolean,"default":!1},ingredients:[{type:mongoose.Schema.Types.ObjectId,ref:"Ingredient"}]}),Recipe=mongoose.model("Recipe",recipeSchema);module.exports=Recipe;

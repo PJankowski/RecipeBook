@@ -2,16 +2,24 @@
     'use strict';
 
     angular.module('Recipes')
-        .controller('ShoppingCtrl', ['$scope', 'Shopping', 'Menu',
-            function($scope, Shopping, Menu) {
+        .controller('ShoppingCtrl', ['$scope', 'Shopping',
+            function($scope, Shopping) {
                 $scope.title = "Shopping List";
 
-                $scope.list = Menu.getMenu();
+                Shopping.getShoppingList()
+                    .then(function(recipes){
+                        $scope.list = recipes;
+                    }, function(err){
+                        console.log(err);
+                    });
 
-                $scope.buyItem = function(ingredient, item, index) {
-                    ingredient.bought = !ingredient.bought;
-
-                    Menu.buyIngredient(ingredient, item, index);
+                $scope.buyItem = function(ingredient, index) {
+                    Shopping.buyItem(ingredient, index)
+                        .then(function(){
+                            ingredient.bought = !ingredient.bought;
+                        }, function(err){
+                            console.log(err);
+                        });
                 };
             }
         ]);

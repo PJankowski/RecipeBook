@@ -50,14 +50,16 @@ exports.create = function(req, res) {
 
 };
 
-exports.destroy = function (req, res) {
-  var id = req.params.id;
+exports.destroy = function(req, res) {
+    var id = req.params.id;
 
-  Recipe.findOneAndRemove({_id: id}, function(err, doc) {
-    if(err){
-      res.status(500).json(err);
-    } else {
-      res.status(200).json(doc);
-    }
-  });
+    Recipe.findOneAndRemove({
+        _id: id
+    }, function(err, doc) {
+        if (err) {
+            res.status(500).json(err);
+        } else {
+            res.status(200).json(doc);
+        }
+    });
 };
