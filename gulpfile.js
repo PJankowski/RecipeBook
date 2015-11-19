@@ -21,16 +21,6 @@ gulp.task('lint', function(){
     .pipe(hint.reporter('default'));
 });
 
-gulp.task('server', ['sass', 'lint'], function(){
-  gulp.src('src')
-    .pipe(server({
-      livereload: true,
-      directoryListing: false,
-      open: false
-    }));
-
-});
-
 gulp.task('watch', ['sass', 'lint'], function(){
   gulp.watch('src/sass/**/*.sass', ['sass']);
   gulp.watch('src/app/**/*.js', ['lint']);
@@ -61,7 +51,7 @@ gulp.task('html', ['useref'], function(){
     .pipe(gulp.dest('dist/client/app/partials'));
 });
 
-gulp.task('serverCode', function(){
+gulp.task('serverCode', ['html'], function(){
   gulp.src('server/**/*.js')
     .pipe(uglify())
     .pipe(gulp.dest('dist/server'));
@@ -73,13 +63,4 @@ gulp.task('serverFile', ['serverCode'], function(){
     .pipe(gulp.dest('dist'));
 });
 
-gulp.task('serve:build', function(){
-  gulp.src('dist/client')
-    .pipe(server({
-      livereload: false,
-      directoryListing: false,
-      open: false
-    }));
-});
-
-gulp.task('build', ['html', 'serverFile']);
+gulp.task('build', ['serverFile']);

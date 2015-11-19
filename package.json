@@ -34,5 +34,6 @@
     "gulp-webserver": "^0.9.1"
   },
   "author": "",
-  "license": "ISC"
+  "license": "ISC",
+  "engine": "node 0.11"
 }
