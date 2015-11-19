@@ -35,5 +35,5 @@
   },
   "author": "",
   "license": "ISC",
-  "engine": "node 0.11"
+  "engine": "node >= 0.12"
 }
