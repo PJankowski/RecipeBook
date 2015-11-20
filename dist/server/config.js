@@ -1,1 +1,1 @@
-var config={env:process.env.NODE_ENV||"development",port:process.env.PORT||8e3,mongoUri:"development"==process.env.NODE_ENV?"mongodb://localhost/recipeBook":process.env.ENV.mongolab};module.exports=config;
+var config={env:process.env.NODE_ENV||"development",port:process.env.PORT||8e3,mongoUri:process.env.mongolab||"mongodb://localhost/recipeBook"};module.exports=config;
