@@ -19,7 +19,7 @@
     <header>
       <div class="row">
         <h1 class="title">Recipe Book</h1>
-        <a href="#" class="loggedEmail" ng-click="logout()" ng-cloak>PJankowski25@gmail.com</a>
+        <a href="#" class="loggedEmail" ng-click="logout()" ng-hide="!user" ng-cloak>{{user.email}}</a>
       </div>
     </header>
     <nav>
@@ -56,17 +56,18 @@
     <script src="/lib/angularfire/dist/angularfire.js"></script>
     <script src="/lib/angular-animate/angular-animate.js"></script>
     <script src="/lib/angular-postman/js/postman.js"></script>
+    <script src="/lib/angular-jwt/dist/angular-jwt.js"></script>
     <!-- endbuild -->
     <!-- App -->
     <!-- build:js app/app.js -->
     <script src="/app/app.js"></script>
-    <!-- <script src="/app/services/auth.js"></script> -->
+    <script src="/app/services/auth.js"></script>
     <!-- <script src="/app/services/users.js"></script> -->
     <script src="/app/services/recipes.js"></script>
     <script src="/app/services/menu.js"></script>
     <script src="/app/services/shopping.js"></script>
     <!-- <script src="/app/controllers/HomeCtrl.js"></script> -->
-    <!-- <script src="/app/controllers/AuthCtrl.js"></script> -->
+    <script src="/app/controllers/AuthCtrl.js"></script>
     <script src="/app/controllers/RecipesCtrl.js"></script>
     <script src="/app/controllers/MenuCtrl.js"></script>
     <script src="/app/controllers/ShoppingCtrl.js"></script>

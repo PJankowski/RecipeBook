@@ -1,11 +1,11 @@
 (function() {
     'use strict';
 
-    angular.module('Recipes', ['ui.router', 'Postman'])
+    angular.module('Recipes', ['ui.router', 'Postman', 'angular-jwt'])
         .config(['$stateProvider', '$urlRouterProvider', '$locationProvider',
             function($stateProvider, $urlRouterProvider, $locationProvider) {
 
-                $urlRouterProvider.otherwise('/recipes');
+                $urlRouterProvider.otherwise('/');
                 $locationProvider.html5Mode(true);
 
                 $stateProvider
@@ -23,12 +23,12 @@
                         url: '/shopping',
                         templateUrl: '/app/partials/shopping.html',
                         controller: 'ShoppingCtrl'
+                    })
+                    .state('home', {
+                        url: '/',
+                        templateUrl: '/app/partials/home.html',
+                        controller: 'AuthCtrl'
                     });
-                    // .state('home', {
-                    //     url: '/',
-                    //     templateUrl: '/app/partials/home.html',
-                    //     controller: 'AuthCtrl'
-                    // });
 
             }
         ]);

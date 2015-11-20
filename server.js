@@ -3,6 +3,7 @@ var express = require('express'),
     logger = require('morgan'),
     mongoose = require('mongoose'),
     bodyParser = require('body-parser'),
+    expressSession = require('express-session'),
     config = require('./server/config'),
     app = express();
 
@@ -10,6 +11,7 @@ app.use(logger('dev'));
 app.set('port', config.port);
 app.use(bodyParser.urlencoded({ extended: false }))
 app.use(bodyParser.json())
+app.use(expressSession({secret: 'Secret'}));
 
 if(config.env == 'development'){
   app.use(express.static(path.join(__dirname, 'src')));

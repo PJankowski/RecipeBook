@@ -13,7 +13,7 @@
     <header>
       <div class="row">
         <h1 class="title">Recipe Book</h1>
-        <a href="#" class="loggedEmail" ng-click="logout()" ng-cloak>PJankowski25@gmail.com</a>
+        <a href="#" class="loggedEmail" ng-click="logout()" ng-hide="!user" ng-cloak>{{user.email}}</a>
       </div>
     </header>
     <nav>

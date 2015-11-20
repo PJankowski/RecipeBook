@@ -1,10 +1,17 @@
 var config = require('./config.js'),
+    auth = require('./controllers/auth'),
     recipes = require('./controllers/recipes'),
     menu = require('./controllers/menu'),
     shopping = require('./controllers/shopping-list'),
     path = require('path');
 
 module.exports = function(app) {
+
+  /**
+   * Auth
+   */
+  app.post('/api/login', auth.login);
+  app.post('/api/signup', auth.signup);
 
   /**
    * Recipes

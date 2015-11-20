@@ -2,29 +2,28 @@
   'use strict';
 
   angular.module('Recipes')
-    .controller('AuthCtrl', ['$scope', '$rootScope', '$state', 'Auth', 'User', function($scope, $rootScope, $state, Auth, User){
+    .controller('AuthCtrl', ['$scope', '$rootScope', '$state', '$window', 'jwtHelper', 'Auth', function($scope, $rootScope, $state, $window, jwtHelper, Auth){
       $scope.title = 'Welcome';
 
       $scope.login = function(user) {
-        Auth.signIn(user)
-          .then(function(data){
-            $rootScope.user = data;
-            console.log(data);
+        Auth.login(user)
+          .then(function(){
+            var token = Auth.getToken();
+
+            var payload = jwtHelper.decodeToken(token);
+            $rootScope.user = payload;
+
             $state.go('recipes');
+
           });
       };
 
       $scope.signup = function(user) {
-        Auth.signUp(user)
-          .then(function(uuid){
-            User.createUser(uuid)
-              .then(function(){
-                Auth.signIn(user)
-                  .then(function(data){
-                    $rootScope.user = data;
-                    $state.go('recipes');
-                  });
-              });
+        Auth.signup(user)
+          .then(function(newUser){
+            console.log(newUser);
+          }, function(err){
+            console.log(err);
           });
       };
     }]);
