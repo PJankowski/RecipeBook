@@ -17,8 +17,6 @@ if(config.env == 'development'){
   app.use(express.static(path.join(__dirname, 'client')));
 }
 
-console.log(config);
-
 mongoose.connect(config.mongoUri, function(err){
   if(err){
     console.log(err);
