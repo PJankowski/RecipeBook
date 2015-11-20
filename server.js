@@ -3,34 +3,33 @@ var express = require('express'),
     logger = require('morgan'),
     mongoose = require('mongoose'),
     bodyParser = require('body-parser'),
+    config = require('./server/config'),
     app = express();
 
-mongoose.connect('mongodb://localhost/recipeBook', function(err){
-  if(err){
-    console.log(err);
-  }
-  else {
-    console.log('Connected!');
-  }
-});
-
 app.use(logger('dev'));
-app.set('PORT', process.env.PORT || 8000);
+app.set('port', config.port);
 app.use(bodyParser.urlencoded({ extended: false }))
 app.use(bodyParser.json())
 
-if(process.env.NODE_ENV == 'development'){
+if(config.env == 'development'){
   app.use(express.static(path.join(__dirname, 'src')));
 }else{
   app.use(express.static(path.join(__dirname, 'client')));
 }
 
-var config = require('./server/config');
-var recipes = require('./server/controllers/recipes');
+console.log(config);
+
+mongoose.connect(config.mongoUri, function(err){
+  if(err){
+    console.log(err);
+  }
+});
+
+// var recipes = require('./server/controllers/recipes');
 require('./server/routes')(app);
 
-app.listen(app.get('PORT'), function(){
-  console.log('Listening on port ' + app.get('PORT'));
+app.listen(config.port, function(){
+  console.log('Listening on port ' + config.port);
 });
 
 exports = module.exports = app;
