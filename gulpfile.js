@@ -47,7 +47,7 @@ gulp.task('useref', ['sass'], function(){
 });
 
 gulp.task('html', ['useref'], function(){
-  gulp.src('src/app/partials/*.html')
+  gulp.src('src/app/partials/**/*.html')
     .pipe(gulp.dest('dist/client/app/partials'));
 });
 

@@ -2,8 +2,8 @@
     'use strict';
 
     angular.module('Recipes')
-        .factory('Auth', ['$q', '$http', '$window',
-            function($q, $http, $window) {
+        .factory('Auth', ['$q', '$http', '$window', 'jwtHelper',
+            function($q, $http, $window, jwtHelper) {
 
                 return {
                     login: function (user) {
@@ -11,7 +11,7 @@
 
                         $http.post('/api/login', user)
                             .success(function(token){
-                                $window.localStorage['jwt'] = token;
+                                $window.localStorage.jwt = token;
                                 deferred.resolve(token);
                             })
                             .error(function(err){
@@ -24,8 +24,9 @@
                         var deferred = $q.defer();
 
                         $http.post('/api/signup', user)
-                            .success(function(newUser){
-                                deferred.resolve(newUser);
+                            .success(function(token){
+                                $window.localStorage.jwt = token;
+                                deferred.resolve(token);
                             })
                             .error(function(err){
                                 deferred.reject(err);
@@ -34,7 +35,10 @@
                         return deferred.promise;
                     },
                     getToken: function() {
-                        return $window.localStorage['jwt'];
+                        return $window.localStorage.jwt;
+                    },
+                    isTokenExpired: function() {
+                        return jwtHelper.isTokenExpired($window.localStorage.jwt);
                     }
                 };
             }

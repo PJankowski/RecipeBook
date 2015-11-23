@@ -1,9 +1,13 @@
 var Recipe = require('../models/recipes'),
     Ingredient = require('../models/ingredients'),
+    jwt = require('jwt-simple'),
+    config = require('../config'),
     _ = require('lodash');
 
 exports.index = function(req, res) {
-    Recipe.find({})
+    var user = req.session.user;
+
+    Recipe.find({user: user})
         .populate('ingredients')
         .exec(function(err, recipes) {
             if (err) {
@@ -17,6 +21,8 @@ exports.index = function(req, res) {
 exports.create = function(req, res) {
     var rec = req.body.recipe,
         ing = req.body.ingredients;
+
+    rec.user = req.session.user;
 
     var recipe = new Recipe(rec);
     var ingredient;

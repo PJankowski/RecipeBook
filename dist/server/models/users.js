@@ -1,1 +1,1 @@
-var mongoose=require("mongoose"),userSchema=mongoose.Schema({name:{first:String,last:String},username:String,email:{type:String,unique:!0},password:String,recipes:[{type:mongoose.Schema.Types.ObjectId,ref:"Recipe"}]}),User=mongoose.model("User",userSchema);module.exports=User;
+var mongoose=require("mongoose"),userSchema=mongoose.Schema({name:{first:String,last:String},username:String,email:{type:String,unique:!0},password:String}),User=mongoose.model("User",userSchema);module.exports=User;

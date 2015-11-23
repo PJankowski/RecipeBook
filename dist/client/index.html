@@ -16,21 +16,21 @@
         <a href="#" class="loggedEmail" ng-click="logout()" ng-hide="!user" ng-cloak>{{user.email}}</a>
       </div>
     </header>
-    <nav>
+    <nav ng-hide="!user">
       <ul>
-        <li class="{{ state == 'recipes' ? 'active' : '' }}">
+        <li ui-sref-active="active">
           <a ui-sref="recipes">
             <i class="fa fa-list"></i>
             <span>Recipes</span>
           </a>
         </li>
-        <li class="{{ state == 'menu' ? 'active' : '' }}">
+        <li ui-sref-active="active">
           <a ui-sref="menu">
             <i class="fa fa-map"></i>
             <span>Current Menu</span>
           </a>
         </li>
-        <li class="{{ state == 'shopping' ? 'active' : '' }}">
+        <li ui-sref-active="active">
           <a ui-sref="shopping">
             <i class="fa fa-shopping-cart"></i>
             <span>Shopping List</span>

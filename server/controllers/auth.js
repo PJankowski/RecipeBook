@@ -3,16 +3,38 @@ var User = require('../models/users'),
     _ = require('lodash'),
     config = require('../config');
 
+var today = new Date(),
+    exp = new Date(today);
+
+exp.setDate(today.getDate() + 60);
+
 exports.login = function(req, res) {
   var user = req.body;
 
   User.findOne({email: user.email}, function(err, loggedUser) {
     if (err) {
-      res.status(500).json({msg: 'Invalid Username or Password, please try again.'});
+      res.status(500).json(err);
     } else {
-      var token = jwt.encode(loggedUser, config.secret);
 
-      res.status(200).json(token);
+      if(!loggedUser) {
+        res.status(500).json({msg: 'Incorrect username.'});
+      }
+
+      if(user.password === loggedUser.password) {
+
+        var token = jwt.encode({
+          email: loggedUser.email,
+          uuid: loggedUser._id,
+          exp: parseInt(exp.getTime() / 1000)
+        }, config.secret);
+
+        req.session.user = loggedUser._id;
+
+        res.status(200).json(token);
+
+      } else {
+        res.status(500).json({msg: 'Incorrect password.'});
+      }
     }
   });
 };
@@ -25,7 +47,15 @@ exports.signup = function(req, res) {
     if (err) {
       res.status(500).json(err);
     } else {
-      res.status(200).json(newUser);
+      var token = jwt.encode({
+        email: newUser.email,
+        uuid: newUser._id,
+        exp: parseInt(exp.getTime() / 1000)
+      }, config.secret);
+
+      req.session.user = newUser._id;
+
+      res.status(200).json(token);
     }
   });
 

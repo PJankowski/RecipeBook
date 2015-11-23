@@ -3,7 +3,7 @@ var Recipe = require('../models/recipes'),
     _ = require('lodash');
 
 exports.index = function(req, res) {
-  Recipe.find({inMenu: true})
+  Recipe.find({inMenu: true, user: req.session.user})
   .populate('ingredients')
   .exec(function(err, recipes){
     if (err) {

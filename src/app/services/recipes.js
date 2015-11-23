@@ -2,8 +2,8 @@
     'use strict';
 
     angular.module('Recipes')
-        .factory('Recipe', ['$http', '$q',
-            function($http, $q) {
+        .factory('Recipe', ['$http', '$q', '$rootScope',
+            function($http, $q, $rootScope) {
 
                 return {
                     getRecipes: function() {

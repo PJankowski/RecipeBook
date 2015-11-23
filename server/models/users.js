@@ -7,8 +7,7 @@ var userSchema = mongoose.Schema({
   },
   username: String,
   email: {type: String, unique: true},
-  password: String,
-  recipes: [{type: mongoose.Schema.Types.ObjectId, ref: 'Recipe'}]
+  password: String
 });
 
 var User = mongoose.model('User', userSchema);

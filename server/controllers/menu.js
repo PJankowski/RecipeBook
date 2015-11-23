@@ -3,7 +3,8 @@ var Recipe = require('../models/recipes'),
 
 exports.index = function(req, res) {
     Recipe.find({
-        inMenu: true
+        inMenu: true,
+        user: req.session.user
     })
         .populate('ingredients')
         .exec(function(err, recipes) {
