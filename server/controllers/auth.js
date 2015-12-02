@@ -60,3 +60,8 @@ exports.signup = function(req, res) {
   });
 
 };
+
+exports.logout = function(req, res) {
+  req.session.user = null;
+  res.status(200).json({response: true});
+};

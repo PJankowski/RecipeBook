@@ -2,8 +2,8 @@
     'use strict';
 
     angular.module('Recipes')
-        .factory('Auth', ['$q', '$http', '$window', 'jwtHelper',
-            function($q, $http, $window, jwtHelper) {
+        .factory('Auth', ['$q', '$http', '$window', '$rootScope', 'jwtHelper',
+            function($q, $http, $window, $rootScope, jwtHelper) {
 
                 return {
                     login: function (user) {
@@ -30,6 +30,26 @@
                             })
                             .error(function(err){
                                 deferred.reject(err);
+                            });
+
+                        return deferred.promise;
+                    },
+                    logout: function() {
+
+                        var deferred = $q.defer();
+
+                        $http.post('/api/logout')
+                            .success(function(){
+
+                                $rootScope.user = null;
+                                $window.localStorage.clear('jwt');
+
+                                deferred.resolve(true);
+                            })
+                            .error(function(err){
+
+                                deferred.reject(err);
+                                
                             });
 
                         return deferred.promise;

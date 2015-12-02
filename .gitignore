@@ -2,3 +2,4 @@ node_modules
 src/lib
 src/stylesheets
 npm-debug.log
+.idea

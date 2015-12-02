@@ -15,7 +15,9 @@
                         controller: 'RecipesCtrl',
                         onEnter: ['$rootScope', '$state', 'Auth', function($rootScope, $state, Auth){
                             if(!$rootScope.user) { $state.go('home'); }
-                            if(Auth.isTokenExpired()) { $state.go('home'); }
+                            if(Auth.getToken()) {
+                                if(!Auth.isTokenExpired()) { $state.go('recipes'); }
+                            }
                         }]
                     })
                     .state('menu', {
@@ -24,7 +26,9 @@
                         controller: 'MenuCtrl',
                         onEnter: ['$rootScope', '$state', 'Auth', function($rootScope, $state, Auth){
                             if(!$rootScope.user) { $state.go('home'); }
-                            if(Auth.isTokenExpired()) { $state.go('home'); }
+                            if(Auth.getToken()) {
+                                if(!Auth.isTokenExpired()) { $state.go('recipes'); }
+                            }
                         }]
                     })
                     .state('shopping', {
@@ -33,25 +37,60 @@
                         controller: 'ShoppingCtrl',
                         onEnter: ['$rootScope', '$state', 'Auth', function($rootScope, $state, Auth){
                             if(!$rootScope.user) { $state.go('home'); }
-                            if(Auth.isTokenExpired()) { $state.go('home'); }
+                            if(Auth.getToken()) {
+                                if(!Auth.isTokenExpired()) { $state.go('recipes'); }
+                            }
                         }]
                     })
                     .state('home', {
-                        // url: '/',
+                        url: '/',
                         templateUrl: '/app/partials/home.html',
                         controller: 'AuthCtrl'
                     })
-                    .state('home.login', {
+                    .state('login', {
                         url: '/login',
                         templateUrl: '/app/partials/auth/login.html',
-                        controller: 'AuthCtrl'
+                        controller: 'AuthCtrl',
+                        onEnter: ['$rootScope', '$state', 'Auth', function($rootScope, $state, Auth){
+                            if($rootScope.user) { $state.go('recipes'); }
+                            if(Auth.getToken()) {
+                                if(!Auth.isTokenExpired()) { $state.go('recipes'); }
+                            }
+                        }]
                     })
-                    .state('home.signup', {
+                    .state('signup', {
                         url: '/signup',
                         templateUrl: '/app/partials/auth/signup.html',
-                        controller: 'AuthCtrl'
+                        controller: 'AuthCtrl',
+                        onEnter: ['$rootScope', '$state', 'Auth', function($rootScope, $state, Auth){
+                            if($rootScope.user) { $state.go('recipes'); }
+                            if(Auth.getToken()) {
+                                if(!Auth.isTokenExpired()) { $state.go('recipes'); }
+                            }
+                        }]
                     });
 
             }
-        ]);
+        ])
+        .run(['$state', '$rootScope', 'jwtHelper', 'Auth', function($state, $rootScope, jwtHelper, Auth){
+            var token = Auth.getToken();
+
+            if (token && !Auth.isTokenExpired()) {
+                var payload = jwtHelper.decodeToken(token);
+                $rootScope.user = payload;
+                $state.go('recipes');
+            } else {
+                $state.go('login');
+            }
+
+            $rootScope.logout = function() {
+                Auth.logout()
+                    .then(function() {
+                        $state.go('login');
+                    }, function(err) {
+                        console.log(err);
+                    });
+            };
+
+        }]);
 })();

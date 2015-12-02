@@ -9,8 +9,8 @@ var express = require('express'),
 
 app.use(logger('dev'));
 app.set('port', config.port);
-app.use(bodyParser.urlencoded({ extended: false }))
-app.use(bodyParser.json())
+app.use(bodyParser.urlencoded({ extended: false }));
+app.use(bodyParser.json());
 app.use(expressSession({secret: 'Secret'}));
 
 if(config.env == 'development'){

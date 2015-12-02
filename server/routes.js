@@ -12,6 +12,7 @@ module.exports = function(app) {
    */
   app.post('/api/login', auth.login);
   app.post('/api/signup', auth.signup);
+  app.post('/api/logout', auth.logout);
 
   /**
    * Recipes
