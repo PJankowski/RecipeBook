@@ -7,16 +7,11 @@ var gulp = require('gulp'),
     gulpif = require('gulp-if'),
     minifyCss = require('gulp-minify-css'),
     del = require('del'),
-    replace = require('gulp-replace'),
-    autoPrefixer = require('gulp-autoprefixer');
+    replace = require('gulp-replace');
 
 gulp.task('sass', function() {
     gulp.src('src/sass/main.sass')
       .pipe(sass())
-      .pipe(autoPrefixer({
-        browsers: ['last 2 versions'],
-        cascade: false
-      }))
       .pipe(gulp.dest('src/stylesheets'));
 });
 
