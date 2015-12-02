@@ -13,34 +13,37 @@
                         url: '/recipes',
                         templateUrl: '/app/partials/recipes.html',
                         controller: 'RecipesCtrl',
-                        onEnter: ['$rootScope', '$state', 'Auth', function($rootScope, $state, Auth){
-                            if(!$rootScope.user) { $state.go('home'); }
-                            if(Auth.getToken()) {
-                                if(!Auth.isTokenExpired()) { $state.go('recipes'); }
+                        onEnter: ['$rootScope', '$state',
+                            function($rootScope, $state) {
+                                if (!$rootScope.user) {
+                                    $state.go('login');
+                                }
                             }
-                        }]
+                        ]
                     })
                     .state('menu', {
                         url: '/menu',
                         templateUrl: '/app/partials/menu.html',
                         controller: 'MenuCtrl',
-                        onEnter: ['$rootScope', '$state', 'Auth', function($rootScope, $state, Auth){
-                            if(!$rootScope.user) { $state.go('home'); }
-                            if(Auth.getToken()) {
-                                if(!Auth.isTokenExpired()) { $state.go('recipes'); }
+                        onEnter: ['$rootScope', '$state', 'Auth',
+                            function($rootScope, $state, Auth) {
+                                if (!$rootScope.user) {
+                                    $state.go('home');
+                                }
                             }
-                        }]
+                        ]
                     })
                     .state('shopping', {
                         url: '/shopping',
                         templateUrl: '/app/partials/shopping.html',
                         controller: 'ShoppingCtrl',
-                        onEnter: ['$rootScope', '$state', 'Auth', function($rootScope, $state, Auth){
-                            if(!$rootScope.user) { $state.go('home'); }
-                            if(Auth.getToken()) {
-                                if(!Auth.isTokenExpired()) { $state.go('recipes'); }
+                        onEnter: ['$rootScope', '$state', 'Auth',
+                            function($rootScope, $state, Auth) {
+                                if (!$rootScope.user) {
+                                    $state.go('home');
+                                }
                             }
-                        }]
+                        ]
                     })
                     .state('home', {
                         url: '/',
@@ -51,46 +54,50 @@
                         url: '/login',
                         templateUrl: '/app/partials/auth/login.html',
                         controller: 'AuthCtrl',
-                        onEnter: ['$rootScope', '$state', 'Auth', function($rootScope, $state, Auth){
-                            if($rootScope.user) { $state.go('recipes'); }
-                            if(Auth.getToken()) {
-                                if(!Auth.isTokenExpired()) { $state.go('recipes'); }
+                        onEnter: ['$rootScope', '$state', 'Auth',
+                            function($rootScope, $state, Auth) {
+                                if ($rootScope.user) {
+                                    $state.go('recipes');
+                                }
                             }
-                        }]
+                        ]
                     })
                     .state('signup', {
                         url: '/signup',
                         templateUrl: '/app/partials/auth/signup.html',
                         controller: 'AuthCtrl',
-                        onEnter: ['$rootScope', '$state', 'Auth', function($rootScope, $state, Auth){
-                            if($rootScope.user) { $state.go('recipes'); }
-                            if(Auth.getToken()) {
-                                if(!Auth.isTokenExpired()) { $state.go('recipes'); }
+                        onEnter: ['$rootScope', '$state', 'Auth',
+                            function($rootScope, $state, Auth) {
+                                if ($rootScope.user) {
+                                    $state.go('recipes');
+                                }
                             }
-                        }]
+                        ]
                     });
 
             }
         ])
-        .run(['$state', '$rootScope', 'jwtHelper', 'Auth', function($state, $rootScope, jwtHelper, Auth){
-            var token = Auth.getToken();
+        .run(['$state', '$rootScope', 'jwtHelper', 'Auth',
+            function($state, $rootScope, jwtHelper, Auth) {
+                var token = Auth.getToken();
 
-            if (token && !Auth.isTokenExpired()) {
-                var payload = jwtHelper.decodeToken(token);
-                $rootScope.user = payload;
-                $state.go('recipes');
-            } else {
-                $state.go('login');
+                if (token && !Auth.isTokenExpired()) {
+                    var payload = jwtHelper.decodeToken(token);
+                    $rootScope.user = payload;
+                    $state.go('recipes');
+                } else {
+                    $state.go('login');
+                }
+
+                $rootScope.logout = function() {
+                    Auth.logout()
+                        .then(function() {
+                            $state.go('login');
+                        }, function(err) {
+                            console.log(err);
+                        });
+                };
+
             }
-
-            $rootScope.logout = function() {
-                Auth.logout()
-                    .then(function() {
-                        $state.go('login');
-                    }, function(err) {
-                        console.log(err);
-                    });
-            };
-
-        }]);
+        ]);
 })();
