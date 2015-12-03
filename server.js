@@ -1,3 +1,5 @@
+require('dotenv').load();
+
 var express = require('express'),
     path = require('path'),
     logger = require('morgan'),
@@ -11,7 +13,7 @@ app.use(logger('dev'));
 app.set('port', config.port);
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
-app.use(expressSession({secret: 'Secret'}));
+app.use(expressSession({secret: config.secret}));
 
 if(config.env == 'development'){
   app.use(express.static(path.join(__dirname, 'src')));

@@ -1,7 +1,7 @@
 (function() {
     'use strict';
 
-    angular.module('Recipes', ['ui.router', 'Postman', 'angular-jwt'])
+    angular.module('Recipes', ['ui.router', 'Postman', 'angular-jwt', 'angular-stripe'])
         .config(['$stateProvider', '$urlRouterProvider', '$locationProvider',
             function($stateProvider, $urlRouterProvider, $locationProvider) {
 
@@ -15,7 +15,7 @@
                         controller: 'RecipesCtrl',
                         onEnter: ['$rootScope', '$state',
                             function($rootScope, $state) {
-                                if (!$rootScope.user) {
+                                if (!$rootScope.user || $rootScope.user.delinquent === true) {
                                     $state.go('login');
                                 }
                             }
@@ -27,7 +27,7 @@
                         controller: 'MenuCtrl',
                         onEnter: ['$rootScope', '$state', 'Auth',
                             function($rootScope, $state, Auth) {
-                                if (!$rootScope.user) {
+                                if (!$rootScope.user || $rootScope.user.delinquent === true) {
                                     $state.go('home');
                                 }
                             }
@@ -39,7 +39,7 @@
                         controller: 'ShoppingCtrl',
                         onEnter: ['$rootScope', '$state', 'Auth',
                             function($rootScope, $state, Auth) {
-                                if (!$rootScope.user) {
+                                if (!$rootScope.user || $rootScope.user.delinquent === true) {
                                     $state.go('home');
                                 }
                             }
@@ -56,7 +56,7 @@
                         controller: 'AuthCtrl',
                         onEnter: ['$rootScope', '$state', 'Auth',
                             function($rootScope, $state, Auth) {
-                                if ($rootScope.user) {
+                                if ($rootScope.user && $rootScope.user.delinquent === false) {
                                     $state.go('recipes');
                                 }
                             }
@@ -68,15 +68,22 @@
                         controller: 'AuthCtrl',
                         onEnter: ['$rootScope', '$state', 'Auth',
                             function($rootScope, $state, Auth) {
-                                if ($rootScope.user) {
+                                if ($rootScope.user && $rootScope.user.delinquent === false) {
                                     $state.go('recipes');
                                 }
                             }
                         ]
+                    })
+                    .state('signup.account', {
+                        templateUrl: '/app/partials/auth/accountForm.html',
+                        controller: 'AuthCtrl'
                     });
 
             }
         ])
+        .config(['stripeProvider', function(stripeProvider) {
+            stripeProvider.setPublishableKey('pk_test_JtilbhkH1q5rq1RxyT6TA27R');
+        }])
         .run(['$state', '$rootScope', 'jwtHelper', 'Auth',
             function($state, $rootScope, jwtHelper, Auth) {
                 var token = Auth.getToken();

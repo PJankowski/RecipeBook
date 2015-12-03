@@ -1,1 +1,1 @@
-var mongoose=require("mongoose"),userSchema=mongoose.Schema({name:{first:String,last:String},username:String,email:{type:String,unique:!0},password:String}),User=mongoose.model("User",userSchema);module.exports=User;
+var mongoose=require("mongoose"),userSchema=mongoose.Schema({username:String,email:{type:String,unique:!0},password:String,stripe:{type:String,unique:!0}}),User=mongoose.model("User",userSchema);module.exports=User;

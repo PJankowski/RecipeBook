@@ -1,42 +1,8 @@
 <section id="home">
-    <h1>{{title}}</h1>
 
     <article>
         
-        <form class="signup">
-            <h3 class="form-title">Signup</h3>
-            <div class="group" ng-show="signUpError">
-                <p class="form-error">{{ signUpError.msg }}</p>
-            </div>
-            <div class="group">
-                <input ng-model="userSignup.email" required type="text"/>
-                <span class="highlight"></span>
-                <span class="bar"></span>
-                <label>Email</label>
-            </div>
-            <div class="group">
-                <input ng-model="userSignup.username" required type="text"/>
-                <span class="highlight"></span>
-                <span class="bar"></span>
-                <label>Username</label>
-            </div>
-            <div class="group">
-                <input ng-model="userSignup.password" required type="password"/>
-                <span class="highlight"></span>
-                <span class="bar"></span>
-                <label>Password</label>
-            </div>
-            <div class="group">
-                <button class="form-submit signup" ng-click="signup(userSignup)">Signup</button>
-                <div class="remember-me" ng-click="checkRemember()">
-                    <i class="fa" ng-class="{'fa-square-o': !rememberMe, 'fa-check-square-o': rememberMe}"></i>
-                    Remember Me
-                </div>
-                <div class="sign-up">
-                    <a ui-sref="login">Login!</a>
-                </div>
-            </div>
-        </form>
+        <div ui-view></div>
 
     </article>
 
