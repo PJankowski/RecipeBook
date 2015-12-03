@@ -1,4 +1,5 @@
 var config = require('./config.js'),
+    stripe = require('./controllers/stripe'),
     auth = require('./controllers/auth'),
     recipes = require('./controllers/recipes'),
     menu = require('./controllers/menu'),
@@ -6,6 +7,11 @@ var config = require('./config.js'),
     path = require('path');
 
 module.exports = function(app) {
+
+  /**
+   * Stripe
+   */
+   app.get('/api/stripe/plans', stripe.getPlans);
 
   /**
    * Auth

@@ -21,37 +21,46 @@ exports.login = function(req, res) {
 
             if (!loggedUser) {
                 res.status(500).json({
-                    msg: 'Incorrect username.'
+                    msg: 'Incorrect Email.'
                 });
-            }
-
-            if (user.password === loggedUser.password) {
-
-                stripe.customers.retrieve(
-                    loggedUser.stripe
-                    )
-                    .then(function(customer){
-                        var delinquent = customer.delinquent;
-
-                        var token = jwt.encode({
-                            email: loggedUser.email,
-                            uuid: loggedUser._id,
-                            delinquent: delinquent,
-                            exp: parseInt(exp.getTime() / 1000)
-                        }, config.secret);
-
-                        req.session.user = loggedUser._id;
-
-                        res.status(200).json(token);
-                    })
-                    .catch(function(err){
-                        res.status(500).json(err);
-                    });
-
             } else {
-                res.status(500).json({
-                    msg: 'Incorrect password.'
-                });
+
+                if (user.password === loggedUser.password) {
+
+                    stripe.customers.retrieve(
+                        loggedUser.stripe
+                        )
+                        .then(function(customer){
+                            console.log(customer);
+                            if(customer.deleted) {
+                                res.status(500).json({msg: 'Please sign up for a subscription.'});
+                            } else {
+
+                                var delinquent = customer.delinquent;
+
+                                var token = jwt.encode({
+                                    email: loggedUser.email,
+                                    uuid: loggedUser._id,
+                                    delinquent: delinquent,
+                                    exp: parseInt(exp.getTime() / 1000)
+                                }, config.secret);
+
+                                req.session.user = loggedUser._id;
+
+                                res.status(200).json(token);
+
+                            }
+                        })
+                        .catch(function(err){
+                            res.status(500).json(err);
+                        });
+
+                } else {
+                    res.status(500).json({
+                        msg: 'Incorrect password.'
+                    });
+                }
+
             }
         }
     });

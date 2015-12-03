@@ -7,6 +7,7 @@ var gulp = require('gulp'),
     gulpif = require('gulp-if'),
     minifyCss = require('gulp-minify-css'),
     del = require('del'),
+    minifyHtml = require('gulp-minify-html'),
     replace = require('gulp-replace');
 
 gulp.task('sass', function() {
@@ -34,7 +35,14 @@ gulp.task('clean', function(){
   return del(['dist/**/*']);
 });
 
-gulp.task('useref', ['sass'], function(){
+gulp.task('lint:build', function() {
+    gulp.src(['src/app/**/*.js', 'server/**/*.js', 'server.js'])
+    .pipe(hint())
+    .pipe(hint.reporter('default'))
+    .pipe(hint.reporter('fail'));
+});
+
+gulp.task('useref', ['sass', 'lint:build'], function(){
   var assets = useref.assets();
 
   return gulp.src('src/index.html')
@@ -48,6 +56,7 @@ gulp.task('useref', ['sass'], function(){
 
 gulp.task('html', ['useref'], function(){
   gulp.src('src/app/partials/**/*.html')
+    .pipe(minifyHtml())
     .pipe(gulp.dest('dist/client/app/partials'));
 });
 

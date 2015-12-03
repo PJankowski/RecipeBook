@@ -2,10 +2,15 @@
   'use strict';
 
   angular.module('Recipes')
-    .controller('AuthCtrl', ['$scope', '$rootScope', '$window', '$state', 'jwtHelper', 'Auth', function($scope, $rootScope, $window, $state, jwtHelper, Auth){
+    .controller('AuthCtrl', ['$scope', '$rootScope', '$window', '$state', 'jwtHelper', 'Auth', 'StripeSrvc', function($scope, $rootScope, $window, $state, jwtHelper, Auth, StripeSrvc){
       $scope.title = 'Welcome';
 
-      // $state.transitionTo('home.login');
+      StripeSrvc.getPlans()
+        .then(function(plans){
+          $scope.plans = plans;
+        }, function(err){
+          console.log(err);
+        });
 
       $scope.rememberMe = false;
 

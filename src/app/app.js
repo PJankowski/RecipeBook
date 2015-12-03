@@ -63,7 +63,7 @@
                         ]
                     })
                     .state('signup', {
-                        url: '/signup',
+                        abstract: true,
                         templateUrl: '/app/partials/auth/signup.html',
                         controller: 'AuthCtrl',
                         onEnter: ['$rootScope', '$state', 'Auth',
@@ -75,8 +75,8 @@
                         ]
                     })
                     .state('signup.account', {
-                        templateUrl: '/app/partials/auth/accountForm.html',
-                        controller: 'AuthCtrl'
+                        url: '/signup',
+                        templateUrl: '/app/partials/auth/accountForm.html'
                     });
 
             }
