@@ -31,19 +31,21 @@
       };
 
       $scope.signup = function(user) {
-        Auth.signup(user)
-          .then(function(newUser){
-            var token = Auth.getToken();
+        // Auth.signup(user)
+        //   .then(function(newUser){
+        //     var token = Auth.getToken();
 
-            var payload = jwtHelper.decodeToken(token);
+        //     var payload = jwtHelper.decodeToken(token);
 
-            $rootScope.user = payload;
+        //     $rootScope.user = payload;
 
-            $state.go('recipes');
+        //     $state.go('recipes');
 
-          }, function(err){
-            $scope.signUpErr = err;
-          });
+        //   }, function(err){
+        //     $scope.signUpErr = err;
+        //   });
+        //   
+        $state.go('signup.plans');
       };
 
       $scope.checkRemember = function() {

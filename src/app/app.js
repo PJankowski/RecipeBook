@@ -77,6 +77,10 @@
                     .state('signup.account', {
                         url: '/signup',
                         templateUrl: '/app/partials/auth/accountForm.html'
+                    })
+                    .state('signup.plans', {
+                        url: '/plans',
+                        templateUrl: '/app/partials/auth/plansForm.html'
                     });
 
             }
@@ -84,8 +88,17 @@
         .config(['stripeProvider', function(stripeProvider) {
             stripeProvider.setPublishableKey('pk_test_JtilbhkH1q5rq1RxyT6TA27R');
         }])
-        .run(['$state', '$rootScope', 'jwtHelper', 'Auth',
-            function($state, $rootScope, jwtHelper, Auth) {
+        .run(['$state', '$rootScope', 'jwtHelper', '$location', '$window', 'Auth',
+            function($state, $rootScope, jwtHelper, $location, $window, Auth) {
+
+                $rootScope.$on('$stateChangeSuccess', function(event){
+                    if(!$window.ga) {
+                        return;
+                    }
+
+                    $window.ga('send', 'pageview', {page: $location.path()});
+                });
+
                 var token = Auth.getToken();
 
                 if (token && !Auth.isTokenExpired()) {
