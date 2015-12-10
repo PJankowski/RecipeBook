@@ -81,6 +81,10 @@
                     .state('signup.plans', {
                         url: '/plans',
                         templateUrl: '/app/partials/auth/plansForm.html'
+                    })
+                    .state('signup.success', {
+                        url: '/signup-success',
+                        templateUrl: '/app/partials/auth/signupSuccess.html'
                     });
 
             }

@@ -185,6 +185,40 @@ section#home
       input
         border-bottom: 2px solid #FFFFFF !important
 
+    .plans
+      width: 80%
+      margin: 0 auto
+
+      h3
+        font-size: 2rem
+        color: #BBBBBB
+        text-align: center
+        margin: 10px 0
+        font-weight: 300
+
+      .plan-list
+        +row()
+
+      .plan
+        background: #FFFFFF
+        +span-columns(4)
+        padding: 1.2rem
+
+      .plan-name
+        font-size: 1.3rem
+        color: $accent
+        text-align: center
+        margin-bottom: 4px
+
+      .buy-area
+        +row()
+
+        span
+          float: left
+
+        button
+          float: right
+
 @keyframes inputHighlighterDark
   from
     background: $primaryDark

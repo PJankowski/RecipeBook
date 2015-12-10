@@ -5,6 +5,8 @@
     .controller('AuthCtrl', ['$scope', '$rootScope', '$window', '$state', 'jwtHelper', 'Auth', 'StripeSrvc', function($scope, $rootScope, $window, $state, jwtHelper, Auth, StripeSrvc){
       $scope.title = 'Welcome';
 
+      $scope.formData = {};
+
       StripeSrvc.getPlans()
         .then(function(plans){
           $scope.plans = plans;
@@ -31,6 +33,14 @@
       };
 
       $scope.signup = function(user) {
+        $scope.formData = user;          
+        $state.go('signup.plans');
+      };
+
+      $scope.choosePlan = function(plan) {
+        $scope.formData.plan = plan;
+        $state.go('signup.success');
+
         // Auth.signup(user)
         //   .then(function(newUser){
         //     var token = Auth.getToken();
@@ -39,13 +49,11 @@
 
         //     $rootScope.user = payload;
 
-        //     $state.go('recipes');
+        //     $state.go('signup.success');
 
         //   }, function(err){
-        //     $scope.signUpErr = err;
+        //     alert(err);
         //   });
-        //   
-        $state.go('signup.plans');
       };
 
       $scope.checkRemember = function() {
