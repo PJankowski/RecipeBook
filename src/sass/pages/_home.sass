@@ -19,10 +19,12 @@ section#home
     box-shadow: none
 
     form.login,
-    form.signup
-      float: left
+    form.signup,
+    form.plans
       width: 50%
       padding: 1.2rem
+      margin: 0 auto
+      box-shadow: 1px 1px 2px rgba(0,0,0,0.14), -1px 1px 2px rgba(0,0,0,0.14)
 
       h3.form-title
         text-align: center
@@ -30,7 +32,18 @@ section#home
         color: $primary
         font-weight: 400
         letter-spacing: 1px
-        margin-bottom: $vertical-rhythm * 2
+        margin-bottom: $vertical-rhythm
+
+      p.form-error
+        text-align: center
+        margin-bottom: $vertical-rhythm
+        background: $danger
+        color: $white
+        border-radius: 3px
+        padding: 5px
+        font-weight: 400
+        font-size: 1.2em
+        box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24)
 
       .group
         position: relative
@@ -105,34 +118,83 @@ section#home
           pointer-events: none
           opacity: 0.5
 
-        input:focus ~ .highlight
-          animation: inputHighlighter 0.3s ease
-
         .form-submit
           padding: 10px
           font-size: 1.2rem
 
+        .remember-me
+          font-size: 1rem
+          margin-top: $vertical-rhythm / 2
+          width: 50%
+          float: left
+
+          i
+            width: 1em
+            font-size: 1.2rem
+            cursor: pointer
+
+            &.fa-check-square-o
+              color: $accent
+
+        .sign-up
+          width: 50%
+          text-align: right
+          float: left
+          margin-top: $vertical-rhythm / 2
+          font-size: 1rem
+
+          a
+            color: $accent
+
     form.login
       background: #FFFFFF
 
-    form.signup
+      .group
+
+        input:focus ~ .highlight
+            animation: inputHighlighterDark 0.3s ease
+
+    form.signup,
+    form.plans
       background: $primary
 
       h3.form-title
         color: #FFFFFF
 
+      .group
+
+        .remember-me
+          color: $white
+
+        input:focus ~ .highlight
+          animation: inputHighlighterLight 0.3s ease
+
+        .bar:before,
+        .bar:after
+          background: $accent
+
       label
           color: #FFFFFF !important
 
+      input
+        color: $white
+
       input:valid ~ label, input:focus ~ label
-        color: $primaryDark !important
+        color: $accent !important
 
       input
-          border-bottom: 2px solid #FFFFFF !important
+        border-bottom: 2px solid #FFFFFF !important
 
-@keyframes inputHighlighter
+@keyframes inputHighlighterDark
   from
     background: $primaryDark
+  to
+    width: 0
+    background: transparent
+
+@keyframes inputHighlighterLight
+  from
+    background: $accent
   to
     width: 0
     background: transparent

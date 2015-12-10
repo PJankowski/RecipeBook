@@ -2,38 +2,35 @@
     'use strict';
 
     angular.module('Recipes')
-        .factory('Menu', ['$firebaseArray', '$q', 'FIREBASE_URL',
-            function($firebaseArray, $q, FIREBASE_URL) {
-                var ref = new Firebase(FIREBASE_URL + '/menu');
-                var menu = $firebaseArray(ref);
+        .factory('Menu', ['$q', '$http',
+            function($q, $http) {
 
                 return {
                     getMenu: function() {
-                        return menu;
-                    },
-                    addToMenu: function(recipe) {
-                        console.log(recipe);
-                        angular.forEach(recipe.ingredients, function(key, value) {
-                            key.bought = false;
-                        });
                         var deferred = $q.defer();
-                        menu.$add(recipe).then(function(data) {
-                            deferred.resolve(data.key());
-                        });
-                        return deferred.promise;
-                    },
-                    removeItem: function(recipe) {
-                        var item = menu.$getRecord(recipe.menuId);
 
-                        var deferred = $q.defer();
-                        menu.$remove(item).then(function() {
-                            deferred.resolve(true);
-                        });
+                        $http.get('/api/recipes/menu')
+                            .success(function(recipes) {
+                                deferred.resolve(recipes);
+                            })
+                            .error(function(err) {
+                                deferred.reject(err);
+                            });
+
                         return deferred.promise;
                     },
-                    buyIngredient: function(ingredient, item, index) {
-                        menu[item].ingredients[index] = ingredient;
-                        menu.$save(menu[item]);
+                    removeFromMenu: function(recipe) {
+                        var deferred = $q.defer();
+
+                        $http.put('/api/recipes/menu/remove', recipe)
+                            .success(function(data) {
+                                deferred.resolve(data);
+                            })
+                            .error(function(err) {
+                                deferred.reject(err);
+                            });
+
+                        return deferred.promise;
                     }
                 };
             }

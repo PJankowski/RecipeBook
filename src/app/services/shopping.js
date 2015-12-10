@@ -2,19 +2,34 @@
     'use strict';
 
     angular.module('Recipes')
-        .factory('Shopping', ['$firebaseArray', '$q', 'FIREBASE_URL',
-            function($firebaseArray, $q, FIREBASE_URL) {
-                var ref = new Firebase(FIREBASE_URL + '/shoppingList');
-                var shoppingList = $firebaseArray(ref);
-
+        .factory('Shopping', ['$q', '$http',
+            function($q, $http) {
                 return {
-                    getItems: function() {
-                        return shoppingList;
+                    getShoppingList: function() {
+                        var deferred = $q.defer();
+
+                        $http.get('/api/recipes/shopping')
+                            .success(function(recipes) {
+                                deferred.resolve(recipes);
+                            })
+                            .error(function(err) {
+                                deferred.reject(err);
+                            });
+
+                        return deferred.promise;
                     },
-                    addToList: function(ingredients) {
-                        angular.forEach(ingredients, function(value, key) {
-                            shoppingList.$add(value);
-                        });
+                    buyItem: function(ingredient) {
+                        var deferred = $q.defer();
+
+                        $http.put('/api/recipes/item', ingredient)
+                            .success(function(data) {
+                                deferred.resolve(data);
+                            })
+                            .error(function(err) {
+                                deferred.rejet(err);
+                            });
+
+                        return deferred.promise;
                     }
                 };
             }

@@ -1,11 +1,11 @@
 (function() {
     'use strict';
 
-    angular.module('Recipes', ['ui.router', 'firebase', 'Postman'])
+    angular.module('Recipes', ['ui.router', 'Postman', 'angular-jwt', 'angular-stripe'])
         .config(['$stateProvider', '$urlRouterProvider', '$locationProvider',
             function($stateProvider, $urlRouterProvider, $locationProvider) {
 
-                $urlRouterProvider.otherwise('/');
+                $urlRouterProvider.otherwise('/login');
                 $locationProvider.html5Mode(true);
 
                 $stateProvider
@@ -13,14 +13,10 @@
                         url: '/recipes',
                         templateUrl: '/app/partials/recipes.html',
                         controller: 'RecipesCtrl',
-                        onEnter: ['$state', '$rootScope', 'Auth',
-                            function($state, $rootScope, Auth) {
-                                if (Auth.isLoggedIn()) {
-                                    $rootScope.state = 'recipes';
-                                    return true;
-                                } else {
-                                    $rootScope.state = '';
-                                    $state.go('home');
+                        onEnter: ['$rootScope', '$state',
+                            function($rootScope, $state) {
+                                if (!$rootScope.user || $rootScope.user.delinquent === true) {
+                                    $state.go('login');
                                 }
                             }
                         ]
@@ -29,13 +25,9 @@
                         url: '/menu',
                         templateUrl: '/app/partials/menu.html',
                         controller: 'MenuCtrl',
-                        onEnter: ['$state', '$rootScope', 'Auth',
-                            function($state, $rootScope, Auth) {
-                                if (Auth.isLoggedIn()) {
-                                    $rootScope.state = 'menu';
-                                    return true;
-                                } else {
-                                    $rootScope.state = '';
+                        onEnter: ['$rootScope', '$state', 'Auth',
+                            function($rootScope, $state, Auth) {
+                                if (!$rootScope.user || $rootScope.user.delinquent === true) {
                                     $state.go('home');
                                 }
                             }
@@ -45,13 +37,9 @@
                         url: '/shopping',
                         templateUrl: '/app/partials/shopping.html',
                         controller: 'ShoppingCtrl',
-                        onEnter: ['$state', '$rootScope', 'Auth',
-                            function($state, $rootScope, Auth) {
-                                if (Auth.isLoggedIn()) {
-                                    $rootScope.state = 'shopping';
-                                    return true;
-                                } else {
-                                    $rootScope.state = '';
+                        onEnter: ['$rootScope', '$state', 'Auth',
+                            function($rootScope, $state, Auth) {
+                                if (!$rootScope.user || $rootScope.user.delinquent === true) {
                                     $state.go('home');
                                 }
                             }
@@ -60,32 +48,76 @@
                     .state('home', {
                         url: '/',
                         templateUrl: '/app/partials/home.html',
+                        controller: 'AuthCtrl'
+                    })
+                    .state('login', {
+                        url: '/login',
+                        templateUrl: '/app/partials/auth/login.html',
                         controller: 'AuthCtrl',
-                        onEnter: ['$state', '$rootScope', 'Auth',
-                            function($state, $rootScope, Auth) {
-                                if (Auth.isLoggedIn()) {
-                                    $rootScope.state = 'recipes';
+                        onEnter: ['$rootScope', '$state', 'Auth',
+                            function($rootScope, $state, Auth) {
+                                if ($rootScope.user && $rootScope.user.delinquent === false) {
                                     $state.go('recipes');
-                                } else {
-                                    return true;
                                 }
                             }
                         ]
+                    })
+                    .state('signup', {
+                        abstract: true,
+                        templateUrl: '/app/partials/auth/signup.html',
+                        controller: 'AuthCtrl',
+                        onEnter: ['$rootScope', '$state', 'Auth',
+                            function($rootScope, $state, Auth) {
+                                if ($rootScope.user && $rootScope.user.delinquent === false) {
+                                    $state.go('recipes');
+                                }
+                            }
+                        ]
+                    })
+                    .state('signup.account', {
+                        url: '/signup',
+                        templateUrl: '/app/partials/auth/accountForm.html'
+                    })
+                    .state('signup.plans', {
+                        url: '/plans',
+                        templateUrl: '/app/partials/auth/plansForm.html'
                     });
 
             }
         ])
-        .run(['$rootScope', '$state', '$timeout', 'Auth',
-            function($rootScope, $state, $timeout, Auth) {
+        .config(['stripeProvider', function(stripeProvider) {
+            stripeProvider.setPublishableKey('pk_test_JtilbhkH1q5rq1RxyT6TA27R');
+        }])
+        .run(['$state', '$rootScope', 'jwtHelper', '$location', '$window', 'Auth',
+            function($state, $rootScope, jwtHelper, $location, $window, Auth) {
+
+                $rootScope.$on('$stateChangeSuccess', function(event){
+                    if(!$window.ga) {
+                        return;
+                    }
+
+                    $window.ga('send', 'pageview', {page: $location.path()});
+                });
+
+                var token = Auth.getToken();
+
+                if (token && !Auth.isTokenExpired()) {
+                    var payload = jwtHelper.decodeToken(token);
+                    $rootScope.user = payload;
+                    $state.go('recipes');
+                } else {
+                    $state.go('login');
+                }
 
                 $rootScope.logout = function() {
-                  Auth.logUserOut()
-                    .then(function(){
-                      $rootScope.user = null;
-                      $state.go('home');
-                    });
+                    Auth.logout()
+                        .then(function() {
+                            $state.go('login');
+                        }, function(err) {
+                            console.log(err);
+                        });
                 };
+
             }
-        ])
-        .constant('FIREBASE_URL', 'https://bookofrecipesstaging.firebaseio.com/');
+        ]);
 })();

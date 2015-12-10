@@ -2,45 +2,65 @@
     'use strict';
 
     angular.module('Recipes')
-        .factory('Auth', ['$firebaseAuth', '$q', 'FIREBASE_URL',
-            function($firebaseAuth, $q, FIREBASE_URL) {
-                var auth, ref = new Firebase(FIREBASE_URL);
-                auth = $firebaseAuth(ref);
+        .factory('Auth', ['$q', '$http', '$window', '$rootScope', 'jwtHelper',
+            function($q, $http, $window, $rootScope, jwtHelper) {
 
                 return {
-                    signIn: function(user) {
+                    login: function (user) {
                         var deferred = $q.defer();
 
-                        auth.$authWithPassword(user)
-                            .then(function(loggedUser) {
-                                deferred.resolve(loggedUser);
-                            }, function(err) {
+                        $http.post('/api/login', user)
+                            .success(function(token){
+                                $window.localStorage.jwt = token;
+                                deferred.resolve(token);
+                            })
+                            .error(function(err){
                                 deferred.reject(err);
                             });
 
                         return deferred.promise;
                     },
-                    signUp: function(user) {
-                      return auth.$createUser(user);
-                    },
-                    isLoggedIn: function() {
-                      if(auth.$getAuth()) {
-                        return true;
-                      } else {
-                        return false;
-                      }
-                    },
-                    getSignedInUser: function() {
-                        return auth.$getAuth();
-                    },
-                    logUserOut: function() {
+                    signup: function(user) {
                         var deferred = $q.defer();
-                        auth.$unauth();
-                        deferred.resolve(true);
+
+                        $http.post('/api/signup', user)
+                            .success(function(token){
+                                $window.localStorage.jwt = token;
+                                deferred.resolve(token);
+                            })
+                            .error(function(err){
+                                deferred.reject(err);
+                            });
+
                         return deferred.promise;
+                    },
+                    logout: function() {
+
+                        var deferred = $q.defer();
+
+                        $http.post('/api/logout')
+                            .success(function(){
+
+                                $rootScope.user = null;
+                                $window.localStorage.clear('jwt');
+
+                                deferred.resolve(true);
+                            })
+                            .error(function(err){
+
+                                deferred.reject(err);
+                                
+                            });
+
+                        return deferred.promise;
+                    },
+                    getToken: function() {
+                        return $window.localStorage.jwt;
+                    },
+                    isTokenExpired: function() {
+                        return jwtHelper.isTokenExpired($window.localStorage.jwt);
                     }
                 };
-
             }
         ]);
 })();

@@ -6,7 +6,12 @@
             function($scope, Menu) {
                 $scope.title = 'Menu';
 
-                $scope.menu = Menu.getMenu();
+                Menu.getMenu()
+                  .then(function(recipes){
+                    $scope.menu = recipes;
+                  }, function(err){
+                    console.log(err);
+                  });
 
             }
         ]);
