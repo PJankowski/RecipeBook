@@ -8,21 +8,25 @@ var gulp = require('gulp'),
     minifyCss = require('gulp-minify-css'),
     del = require('del'),
     minifyHtml = require('gulp-minify-html'),
-    replace = require('gulp-replace');
+    replace = require('gulp-replace'),
+    lr = require('gulp-livereload');
 
 gulp.task('sass', function() {
     gulp.src('src/sass/main.sass')
       .pipe(sass())
-      .pipe(gulp.dest('src/stylesheets'));
+      .pipe(gulp.dest('src/stylesheets'))
+      .pipe(lr());
 });
 
 gulp.task('lint', function(){
   gulp.src(['src/app/**/*.js', 'server/**/*.js', 'server.js'])
     .pipe(hint())
-    .pipe(hint.reporter('default'));
+    .pipe(hint.reporter('default'))
+    .pipe(lr());
 });
 
 gulp.task('watch', ['sass', 'lint'], function(){
+  lr.listen();
   gulp.watch('src/sass/**/*.sass', ['sass']);
   gulp.watch(['src/app/**/*.js', 'server/**/*.js', 'server.js'], ['lint']);
 });
