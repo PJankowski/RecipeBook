@@ -1,1 +1,0 @@
-var config=require("../config"),stripe=require("stripe")(config.stripeAPIKey);exports.getPlans=function(t,n){stripe.plans.list().then(function(t){n.status(200).json(t.data)})["catch"](function(t){n.status(500).json(t)})};

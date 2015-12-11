@@ -4,8 +4,7 @@ var User = require('../models/users'),
     config = require('../config');
 
 var today = new Date(),
-    exp = new Date(today),
-    stripe = require('stripe')(config.stripeAPIKey);
+    exp = new Date(today);
 
 exp.setDate(today.getDate() + 60);
 

@@ -76,9 +76,4 @@ gulp.task('serverFile', ['serverCode'], function(){
     .pipe(gulp.dest('dist'));
 });
 
-gulp.task('configFiles', ['serverFile'], function() {
-    gulp.src(['package.json', 'Procfile'])
-      .pipe(gulp.dest('dist'));
-});
-
-gulp.task('build', ['configFiles']);
+gulp.task('build', ['serverFile']);
