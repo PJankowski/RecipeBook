@@ -27,33 +27,16 @@ exports.login = function(req, res) {
 
                 if (user.password === loggedUser.password) {
 
-                    stripe.customers.retrieve(
-                        loggedUser.stripe
-                        )
-                        .then(function(customer){
-                            console.log(customer);
-                            if(customer.deleted) {
-                                res.status(500).json({msg: 'Please sign up for a subscription.'});
-                            } else {
+                    var token = jwt.encode({
+                        email: loggedUser.email,
+                        uuid: loggedUser._id,
+                        delinquent: delinquent,
+                        exp: parseInt(exp.getTime() / 1000)
+                    }, config.secret);
 
-                                var delinquent = customer.delinquent;
+                    req.session.user = loggedUser._id;
 
-                                var token = jwt.encode({
-                                    email: loggedUser.email,
-                                    uuid: loggedUser._id,
-                                    delinquent: delinquent,
-                                    exp: parseInt(exp.getTime() / 1000)
-                                }, config.secret);
-
-                                req.session.user = loggedUser._id;
-
-                                res.status(200).json(token);
-
-                            }
-                        })
-                        .catch(function(err){
-                            res.status(500).json(err);
-                        });
+                    res.status(200).json(token);
 
                 } else {
                     res.status(500).json({
@@ -69,33 +52,22 @@ exports.login = function(req, res) {
 exports.signup = function(req, res) {
 
     var user = new User(req.body);
-
-    stripe.customers.create({
-        email: user.email
-    })
-        .then(function(customer) {
-            user.stripe = customer.id;
-            user.save(function(err, newUser) {
-                if (err) {
-                    res.status(500).json(err);
-                } else {
-                    var token = jwt.encode({
-                        email: newUser.email,
-                        uuid: newUser._id,
-                        delinquent: customer.delinquent,
-                        exp: parseInt(exp.getTime() / 1000)
-                    }, config.secret);
-
-                    req.session.user = newUser._id;
-
-                    res.status(200).json(token);
-                }
-            });
-        })
-        .catch(function(err) {
+    user.save(function(err, newUser) {
+        if (err) {
             res.status(500).json(err);
-        });
+        } else {
+            var token = jwt.encode({
+                email: newUser.email,
+                uuid: newUser._id,
+                delinquent: customer.delinquent,
+                exp: parseInt(exp.getTime() / 1000)
+            }, config.secret);
 
+            req.session.user = newUser._id;
+
+            res.status(200).json(token);
+        }
+    });
 };
 
 exports.logout = function(req, res) {

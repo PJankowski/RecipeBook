@@ -1,7 +1,7 @@
 (function() {
     'use strict';
 
-    angular.module('Recipes', ['ui.router', 'Postman', 'angular-jwt', 'angular-stripe'])
+    angular.module('Recipes', ['ui.router', 'Postman', 'angular-jwt'])
         .config(['$stateProvider', '$urlRouterProvider', '$locationProvider',
             function($stateProvider, $urlRouterProvider, $locationProvider) {
 
@@ -15,7 +15,7 @@
                         controller: 'RecipesCtrl',
                         onEnter: ['$rootScope', '$state',
                             function($rootScope, $state) {
-                                if (!$rootScope.user || $rootScope.user.delinquent === true) {
+                                if (!$rootScope.user) {
                                     $state.go('login');
                                 }
                             }
@@ -25,9 +25,9 @@
                         url: '/menu',
                         templateUrl: '/app/partials/menu.html',
                         controller: 'MenuCtrl',
-                        onEnter: ['$rootScope', '$state', 'Auth',
-                            function($rootScope, $state, Auth) {
-                                if (!$rootScope.user || $rootScope.user.delinquent === true) {
+                        onEnter: ['$rootScope', '$state',
+                            function($rootScope, $state) {
+                                if (!$rootScope.user) {
                                     $state.go('home');
                                 }
                             }
@@ -37,9 +37,9 @@
                         url: '/shopping',
                         templateUrl: '/app/partials/shopping.html',
                         controller: 'ShoppingCtrl',
-                        onEnter: ['$rootScope', '$state', 'Auth',
-                            function($rootScope, $state, Auth) {
-                                if (!$rootScope.user || $rootScope.user.delinquent === true) {
+                        onEnter: ['$rootScope', '$state',
+                            function($rootScope, $state) {
+                                if (!$rootScope.user) {
                                     $state.go('home');
                                 }
                             }
@@ -54,9 +54,9 @@
                         url: '/login',
                         templateUrl: '/app/partials/auth/login.html',
                         controller: 'AuthCtrl',
-                        onEnter: ['$rootScope', '$state', 'Auth',
-                            function($rootScope, $state, Auth) {
-                                if ($rootScope.user && $rootScope.user.delinquent === false) {
+                        onEnter: ['$rootScope', '$state',
+                            function($rootScope, $state) {
+                                if ($rootScope.user) {
                                     $state.go('recipes');
                                 }
                             }
@@ -66,9 +66,9 @@
                         abstract: true,
                         templateUrl: '/app/partials/auth/signup.html',
                         controller: 'AuthCtrl',
-                        onEnter: ['$rootScope', '$state', 'Auth',
-                            function($rootScope, $state, Auth) {
-                                if ($rootScope.user && $rootScope.user.delinquent === false) {
+                        onEnter: ['$rootScope', '$state',
+                            function($rootScope, $state) {
+                                if ($rootScope.user) {
                                     $state.go('recipes');
                                 }
                             }
@@ -77,21 +77,9 @@
                     .state('signup.account', {
                         url: '/signup',
                         templateUrl: '/app/partials/auth/accountForm.html'
-                    })
-                    .state('signup.plans', {
-                        url: '/plans',
-                        templateUrl: '/app/partials/auth/plansForm.html'
-                    })
-                    .state('signup.success', {
-                        url: '/signup-success',
-                        templateUrl: '/app/partials/auth/signupSuccess.html'
                     });
-
             }
         ])
-        .config(['stripeProvider', function(stripeProvider) {
-            stripeProvider.setPublishableKey('pk_test_JtilbhkH1q5rq1RxyT6TA27R');
-        }])
         .run(['$state', '$rootScope', 'jwtHelper', '$location', '$window', 'Auth',
             function($state, $rootScope, jwtHelper, $location, $window, Auth) {
 

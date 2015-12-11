@@ -2,17 +2,8 @@
   'use strict';
 
   angular.module('Recipes')
-    .controller('AuthCtrl', ['$scope', '$rootScope', '$window', '$state', 'jwtHelper', 'Auth', 'StripeSrvc', function($scope, $rootScope, $window, $state, jwtHelper, Auth, StripeSrvc){
+    .controller('AuthCtrl', ['$scope', '$rootScope', '$window', '$state', 'jwtHelper', 'Auth', function($scope, $rootScope, $window, $state, jwtHelper, Auth){
       $scope.title = 'Welcome';
-
-      $scope.formData = {};
-
-      StripeSrvc.getPlans()
-        .then(function(plans){
-          $scope.plans = plans;
-        }, function(err){
-          console.log(err);
-        });
 
       $scope.rememberMe = false;
 
@@ -33,27 +24,17 @@
       };
 
       $scope.signup = function(user) {
-        $scope.formData = user;          
-        $state.go('signup.plans');
-      };
+        Auth.signup(user)
+          .then(function(token){
+            var payload = jwtHelper.decodeToken(token);
 
-      $scope.choosePlan = function(plan) {
-        $scope.formData.plan = plan;
-        $state.go('signup.success');
+            $rootScope.user = payload;
 
-        // Auth.signup(user)
-        //   .then(function(newUser){
-        //     var token = Auth.getToken();
+            $state.go('recipes');
 
-        //     var payload = jwtHelper.decodeToken(token);
-
-        //     $rootScope.user = payload;
-
-        //     $state.go('signup.success');
-
-        //   }, function(err){
-        //     alert(err);
-        //   });
+          }, function(err){
+            console.log(JSON.stringify(err));
+          });
       };
 
       $scope.checkRemember = function() {
