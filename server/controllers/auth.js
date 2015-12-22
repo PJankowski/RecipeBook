@@ -29,7 +29,6 @@ exports.login = function(req, res) {
                     var token = jwt.encode({
                         email: loggedUser.email,
                         uuid: loggedUser._id,
-                        delinquent: delinquent,
                         exp: parseInt(exp.getTime() / 1000)
                     }, config.secret);
 
@@ -58,7 +57,6 @@ exports.signup = function(req, res) {
             var token = jwt.encode({
                 email: newUser.email,
                 uuid: newUser._id,
-                delinquent: customer.delinquent,
                 exp: parseInt(exp.getTime() / 1000)
             }, config.secret);
 

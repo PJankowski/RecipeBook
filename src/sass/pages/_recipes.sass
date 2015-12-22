@@ -10,63 +10,82 @@ section#recipes
     margin-top: $vertical-rhythm
     margin-bottom: $vertical-rhythm
 
+.recipe-name
+  border-bottom: 1px solid $primary
+  font-size: 2rem
+  color: $primary
+  padding-bottom: 5px
+
+  i
+    float: right
+    cursor: pointer
+
+    &:hover
+      color: $primaryDark
+
+p.description
+  display: block
+  margin: 10px 0
+  font-size: 1rem
+
+article.inMenu
   .recipe-name
-    border-bottom: 1px solid $primary
-    font-size: 2rem
-    color: $primary
-    padding-bottom: 5px
+    color: $white
+    border-color: $white
 
-    i
-      float: right
-      cursor: pointer
+  i
+    color: $white
 
-      &:hover
-        color: $primaryDark
+    &:hover
+      color: $white
 
-  p.description
+  p
+    color: $white
+
+.ingredients
+  margin-top: $vertical-rhythm
+
+  .ingredient
+    background: #eeeeee
     display: block
-    margin: 10px 0
-    font-size: 1rem
+    border-radius: 35px
+    height: 35px
+    +clearfix()
 
-  article.inMenu
-    .recipe-name
-      color: $white
-      border-color: $white
-
-    i
-      color: $white
-
-      &:hover
-        color: $white
-
-    p
-      color: $white
-
-  .ingredients
-    margin-top: $vertical-rhythm
+    .chip
+      background: $primaryDark
+      padding: 0
+      border-radius: 50%
+      float: left
+      margin-right: 15px
+      height: 35px
+      width: 35px
+      line-height: 35px
+      text-align: center
+      font-style: normal !important
+      font-size: 1.3em
 
     span
-      margin-right: 10px
-      font-size: 1rem
-      background: #eeeeee
-      padding: 6px 11px
-      border-radius: 12px
+      margin-bottom: 0
+      float: left
+      line-height: 35px
+      font-size: 1.3em
 
-  .addMenu
-    background: $accent
-    border: none
-    margin-top: $vertical-rhythm
-    color: $white
-    padding: 6px 12px
-    font-size: 1.1rem
-    font-weight: 700
+.addMenu
+  background: $accent
+  border: none
+  margin-top: $vertical-rhythm
+  color: $white
+  padding: 6px 12px
+  font-size: 1.1rem
+  font-weight: 700
 
-  .removeMenu
-    background: $danger
-    margin-top: $vertical-rhythm
-    padding: 6px 12px
-    font-size: 1.1rem
-    font-weight: 700
+.removeMenu
+  background: $danger
+  margin-top: $vertical-rhythm
+  padding: 6px 12px
+  font-size: 1.1rem
+  font-weight: 700
 
 .newRecipeForm
   background: #FFFFFF
@@ -102,55 +121,55 @@ section#recipes
       // background: #eeeeee
       border-radius: 3px
 
-    .addItems
-      .item_group
-        +clearfix()
-        +display(flex)
-        +flex-direction(row)
-        +justify-content(space-between)
-        +align-items(center)
-        margin-bottom: $vertical-rhythm / 2
-
-        i
-          background: #eeeeee
-          padding: 6px
-          border-radius: 50%
-          float: left
-          margin-right: 2%
-
-        .group
-          float: left
-          width: 48%
-
-    .addItemButton
-      width: calc(100% - 1.2rem)
-      border-radius: 0
-      background-color: #eeeeee
-      border: none
-      padding: 6px 0
-      margin-bottom: 10px
-      cursor: pointer
-      font-size: 1.1rem
-      color: $text
-      outline: none
-      box-shadow: none
-
     &:first-of-type
       margin-top: $vertical-rhythm
 
-  .newRecipeBtn
-    background: $accent
-    margin-top: $vertical-rhythm / 2
-    margin-left: 1.2rem
-    margin-bottom: 1.2rem
-    color: $white
-    padding: 6px 12px
-    font-size: 1.1rem
-    font-weight: 700
+.addItems
+  .item_group
+    +clearfix()
+    +display(flex)
+    +flex-direction(row)
+    +justify-content(space-between)
+    +align-items(center)
+    margin-bottom: $vertical-rhythm / 2
 
-  i.close
-    position: absolute
-    top: 20px
-    right: 20px
-    font-size: 1.5em
-    cursor: pointer
+    i
+      background: #eeeeee
+      padding: 6px
+      border-radius: 50%
+      float: left
+      margin-right: 2%
+
+    .group
+      float: left
+      width: 48%
+
+.addItemButton
+  width: calc(100% - 1.2rem)
+  border-radius: 0
+  background-color: #eeeeee
+  border: none
+  padding: 6px 0
+  margin-bottom: 10px
+  cursor: pointer
+  font-size: 1.1rem
+  color: $text
+  outline: none
+  box-shadow: none
+
+.newRecipeBtn
+  background: $accent
+  margin-top: $vertical-rhythm / 2
+  margin-left: 1.2rem
+  margin-bottom: 1.2rem
+  color: $white
+  padding: 6px 12px
+  font-size: 1.1rem
+  font-weight: 700
+
+i.close
+  position: absolute
+  top: 20px
+  right: 20px
+  font-size: 1.5em
+  cursor: pointer

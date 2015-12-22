@@ -1,7 +1,7 @@
 (function() {
     'use strict';
 
-    angular.module('Recipes', ['ui.router', 'Postman', 'angular-jwt'])
+    angular.module('Recipes', ['ui.router', 'angular-jwt'])
         .config(['$stateProvider', '$urlRouterProvider', '$locationProvider',
             function($stateProvider, $urlRouterProvider, $locationProvider) {
 

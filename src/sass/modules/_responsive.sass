@@ -15,39 +15,6 @@
     a.loggedEmail
       display: none
 
-  nav
-    width: 100vw
-    top: auto
-    left: 0
-    right: 0
-    bottom: 0
-    height: auto
-    padding-top: 0
-
-    ul
-
-      li
-        +span-columns(4)
-        height: 50px
-        font-size: 1em
-        box-sizing: border-box
-
-        i
-          margin-top: 10px
-
-        &.active
-          border: none
-
-          a, a i, a span
-            color: $accent
-
-          &:hover
-            border: none
-
-        &:hover
-          border: none
-          background: $primaryDark
-
   section#recipes,
   section#menu,
   section#shopping
@@ -73,3 +40,73 @@
     .shopping-list
       li
         font-size: 1.3em
+
+@media screen and (min-width: 500px)
+  header
+    .row
+      span.loggedEmail
+        +span-columns(4)
+        line-height: 80px
+        color: #FFFFFF
+        text-align: right
+        cursor: pointer
+        display: block
+
+  nav
+    width: 12%
+    background: $primary
+    padding-top: 80px
+    float: left
+    position: fixed
+    left: 0
+    top: 80px
+    bottom: 0
+    z-index: 999
+
+    ul
+      list-style-type: none
+
+      li
+        width: 100%
+        height: 130px
+        display: block
+        cursor: pointer
+        transition: background 0.3s ease-in, border 0.3s ease-in
+        text-align: center
+        font-size: 2.4em
+
+        a
+          color: $white
+          text-decoration: none
+          display: block
+
+        i
+          display: block
+          margin-top: 40px
+
+        span
+          margin-top: 8px
+          font-size: 0.6em
+          display: block
+
+        &.active
+          border-left: 9px solid $accent
+          background: $primaryDark
+
+          a
+            color: $white
+
+      &:hover
+        border-left: 9px solid $accent
+        background: $primaryDark
+
+        a
+          color: $white
+
+  article
+    &:hover
+      box-shadow: 3px 3px 4px rgba(0,0,0,0.14), -3px 3px 4px rgba(0,0,0,0.14)
+
+  #{$all-buttons}
+    &:hover
+      box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23)

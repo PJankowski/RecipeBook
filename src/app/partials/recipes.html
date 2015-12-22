@@ -39,7 +39,7 @@
       </h3>
       <p class="description">{{recipe.description}}</p>
       <div class="ingredients">
-        <span ng-repeat="ingredient in recipe.ingredients">{{ingredient.name}} - {{ingredient.amount}}</span>
+        <div class="ingredient" ng-repeat="ingredient in recipe.ingredients"><i class="chip">{{ingredient.name | limitTo:1}}</i><span>{{ingredient.name}} - {{ingredient.amount}}</span></div>
       </div>
       <button class="addMenu" ng-hide="recipe.inMenu" ng-click="addToMenu(recipe, $index)">Add to Menu</button>
       <button class="removeMenu" ng-hide="!recipe.inMenu" ng-click="removeMenu(recipe, $index)">Remove From Menu</button>
